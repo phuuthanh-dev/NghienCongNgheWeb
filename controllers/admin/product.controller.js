@@ -34,9 +34,22 @@ module.exports.index = async (req, res) => {
     );
     // End Pagination
 
-    const products = await Product.find(find)
+    // Sort
+    const sort = {};
+    if (req.query.sortKey && req.query.sortValue) {
+        const sortKey = req.query.sortKey;
+        const sortValue = req.query.sortValue;
+        sort[sortKey] = sortValue;
+    } else {
+        sort.position = "desc";
+    }
+    // End Sort
+
+    const products = await Product
+        .find(find)
         .limit(objectPagination.itemsPerPage)
-        .skip(objectPagination.skip);
+        .skip(objectPagination.skip)
+        .sort(sort);
 
     res.render('admin/pages/products/index', {
         pageTitle: 'Danh sách sản phẩm',
@@ -86,6 +99,14 @@ module.exports.changeMulti = async (req, res) => {
                 deletedAt: new Date()
             });
             req.flash('success', 'Xóa sản phẩm thành công!');
+            break;
+        case "change-position":
+            for (const item of ids) {
+                let [id, position] = item.split("-");
+                position = parseInt(position);
+                await Product.updateOne({ _id: id }, { position: position });
+            }
+            req.flash('success', 'Thay đổi vị trí sản phẩm thành công!');
             break;
         default:
             break;

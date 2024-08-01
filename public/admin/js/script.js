@@ -107,20 +107,26 @@ if (formChangeMulti) {
     const listInputIdChecked = checkboxMulti.querySelectorAll("input[name='id']:checked");
     const typeChange = event.target.elements.type.value;
 
+    if (typeChange == "delete-all") {
+      const isConfirm = confirm("Bạn có chắc muốn xóa những sản phẩm này?");
+      if (!isConfirm) return;
+    }
+
     if (listInputIdChecked.length > 0) {
       let ids = [];
 
       listInputIdChecked.forEach(input => {
         const id = input.value;
-        ids.push(id);
+
+        if (typeChange == "change-position") {
+          const position = input.closest("tr").querySelector("input[name='position']").value;
+          ids.push(`${id}-${position}`);
+        } else {
+          ids.push(id);
+        }
       });
       const stringIds = ids.join(", ");
       formChangeMulti.querySelector("input[name='ids']").value = stringIds;
-
-      if (typeChange == "delete-all") {
-        const isConfirm = confirm("Bạn có chắc muốn xóa những sản phẩm này?");
-        if (!isConfirm) return;
-      }
 
       formChangeMulti.submit();
     } else {
