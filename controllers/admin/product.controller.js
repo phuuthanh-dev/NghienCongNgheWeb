@@ -73,10 +73,19 @@ module.exports.changeMulti = async (req, res) => {
     let ids = req.body.ids.split(", ");
     switch (type) {
         case "active":
-            await Product.updateMany({ _id: { $in: ids }}, { status: "active" });
+            await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+            req.flash('success', 'Cập nhật trạng thái thành công!');
             break;
         case 'inactive':
-            await Product.updateMany({ _id: { $in: ids }}, { status: "inactive" });
+            await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+            req.flash('success', 'Cập nhật trạng thái thành công!');
+            break;
+        case "delete-all":
+            await Product.updateMany({ _id: { $in: ids } }, {
+                deleted: true,
+                deletedAt: new Date()
+            });
+            req.flash('success', 'Xóa sản phẩm thành công!');
             break;
         default:
             break;
@@ -88,8 +97,11 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
     const id = req.params.id;
 
-    await Product.deleteOne({
+    await Product.updateOne({
         _id: id
+    }, {
+        deleted: true,
+        deletedAt: new Date()
     });
 
     req.flash('success', `Xóa sản phẩm thành công!`);

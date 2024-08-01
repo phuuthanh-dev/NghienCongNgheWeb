@@ -105,7 +105,7 @@ if (formChangeMulti) {
     event.preventDefault();
     const checkboxMulti = document.querySelector("[checkbox-multi]");
     const listInputIdChecked = checkboxMulti.querySelectorAll("input[name='id']:checked");
-    const type = formChangeMulti.querySelector("select[name='type']").value;
+    const typeChange = event.target.elements.type.value;
 
     if (listInputIdChecked.length > 0) {
       let ids = [];
@@ -116,6 +116,12 @@ if (formChangeMulti) {
       });
       const stringIds = ids.join(", ");
       formChangeMulti.querySelector("input[name='ids']").value = stringIds;
+
+      if (typeChange == "delete-all") {
+        const isConfirm = confirm("Bạn có chắc muốn xóa những sản phẩm này?");
+        if (!isConfirm) return;
+      }
+
       formChangeMulti.submit();
     } else {
       alert("Vui lòng chọn ít nhất 1 sản phẩm để thực hiện thao tác!");
