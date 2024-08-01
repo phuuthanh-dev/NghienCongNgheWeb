@@ -83,3 +83,16 @@ module.exports.changeMulti = async (req, res) => {
     }
     res.redirect('back');
 }
+
+// [DELETE] /admin/products/delete/:id
+module.exports.deleteItem = async (req, res) => {
+    const id = req.params.id;
+
+    await Product.deleteOne({
+        _id: id
+    });
+
+    req.flash('success', `Xóa sản phẩm thành công!`);
+
+    res.redirect('back');
+}

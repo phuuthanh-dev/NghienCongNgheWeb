@@ -109,7 +109,7 @@ if (formChangeMulti) {
 
     if (listInputIdChecked.length > 0) {
       let ids = [];
-      
+
       listInputIdChecked.forEach(input => {
         const id = input.value;
         ids.push(id);
@@ -122,5 +122,4 @@ if (formChangeMulti) {
     }
   });
 }
-
 // End Form change multi
