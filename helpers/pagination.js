@@ -1,9 +1,7 @@
-module.exports = (req, countDocuments) => {
-    const objectPagination = {
-        itemsPerPage: 4,
-        currentPage: parseInt(req.query.page) || 1,
-        url: req.originalUrl
-    };
+module.exports = (objectPagination, req, countDocuments) => {
+    if (req.query.page) {
+        objectPagination.currentPage = parseInt(req.query.page);
+    }
 
     objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.itemsPerPage;
 

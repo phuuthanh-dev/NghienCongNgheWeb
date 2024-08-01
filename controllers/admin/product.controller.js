@@ -15,6 +15,7 @@ module.exports.index = async (req, res) => {
     if (req.query.status) {
         find.status = req.query.status;
     }
+    // End Filter status
 
     // Search
     const objectSearch = searchHelper(req);
@@ -22,14 +23,20 @@ module.exports.index = async (req, res) => {
     if (objectSearch.regex) {
         find.title = objectSearch.regex
     }
+    // End Search
 
     // Pagination
     const countDocuments = await Product.countDocuments(find);
-    const objectPagination = paginationHelper(req, countDocuments);
+    const objectPagination = paginationHelper(
+        { itemsPerPage: 4, currentPage: 1 },
+        req,
+        countDocuments
+    );
+    // End Pagination
 
     const products = await Product.find(find)
-                                    .limit(objectPagination.itemsPerPage)
-                                    .skip(objectPagination.skip);
+        .limit(objectPagination.itemsPerPage)
+        .skip(objectPagination.skip);
 
     res.render('admin/pages/products/index', {
         pageTitle: 'Danh sách sản phẩm',
