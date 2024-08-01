@@ -5,6 +5,7 @@ const systemConfig = require('./config/system')
 const routeAdmin = require("./routes/admin/index.route")
 const routeClient = require("./routes/client/index.route")
 const methodOverride = require('method-override')
+const bodyParser = require('body-parser')
 const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session');
@@ -17,6 +18,12 @@ const port = process.env.PORT
 
 app.set('views', './views')
 app.set('view engine', 'pug')
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 // Flash
 app.use(cookieParser('JHSVBDSDSD'));
