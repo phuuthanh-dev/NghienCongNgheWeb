@@ -1,4 +1,7 @@
 const Product = require('../../models/product.model');
+const filterStatusHelper = require('../../helpers/filterStatus');
+const searchHelper = require('../../helpers/search');
+const paginationHelper = require('../../helpers/pagination');
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -6,49 +9,33 @@ module.exports.index = async (req, res) => {
         deleted: false
     };
 
-    const filterStatus = [
-        {
-            name: "Tất cả",
-            status: "",
-            class: ""
-        },
-        {
-            name: "Hoạt động",
-            status: "active",
-            class: ""
-        },
-        {
-            name: "Dừng hoạt động",
-            status: "inactive",
-            class: ""
-        }
-    ];
-
-    if (req.query.status) {
-        const index = filterStatus.findIndex(item => item.status == req.query.status);
-        if (index != -1)
-            filterStatus[index].class = "active";
-    } else {
-        const index = filterStatus.findIndex(item => item.status == "");
-        filterStatus[index].class = "active";
-    }
+    // Filter status
+    const filterStatus = filterStatusHelper(req);
 
     if (req.query.status) {
         find.status = req.query.status;
     }
 
     // Search
-    if (req.query.keyword) {
-        const regex = new RegExp(req.query.keyword, "i");
-        find.title = regex;
+    const objectSearch = searchHelper(req);
+
+    if (objectSearch.regex) {
+        find.title = objectSearch.regex
     }
 
-    const products = await Product.find(find);
+    // Pagination
+    const countDocuments = await Product.countDocuments(find);
+    const objectPagination = paginationHelper(req, countDocuments);
+
+    const products = await Product.find(find)
+                                    .limit(objectPagination.itemsPerPage)
+                                    .skip(objectPagination.skip);
 
     res.render('admin/pages/products/index', {
         pageTitle: 'Danh sách sản phẩm',
         products: products,
         filterStatus: filterStatus,
-        keyword: req.query.keyword
+        keyword: objectSearch.keyword,
+        objectPagination: objectPagination
     })
 }
