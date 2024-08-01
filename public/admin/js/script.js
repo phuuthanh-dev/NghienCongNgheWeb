@@ -56,8 +56,7 @@ if (listButtonPagination.length > 0) {
 // show-alert
 const showAlert = document.querySelector("[show-alert]");
 if (showAlert) {
-  let time = showAlert.getAttribute("data-time");
-  time = parseInt(time);
+  const time = parseInt(showAlert.getAttribute("data-time"));
 
   // Sau time giây sẽ đóng thông báo
   setTimeout(() => {

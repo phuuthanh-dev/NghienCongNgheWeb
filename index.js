@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // Flash
-app.use(cookieParser('JHSVBDSDSD'));
+app.use(cookieParser('HKAHLALASGAD'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 
