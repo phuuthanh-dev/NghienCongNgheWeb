@@ -46,3 +46,23 @@ module.exports.index = async (req, res) => {
         objectPagination: objectPagination
     })
 }
+
+// [PATCH] /admin/products/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+    const status = req.params.status;
+    const id = req.params.id;
+
+    await Product.updateOne({
+        _id: id
+    }, {
+        status: status
+    });
+
+    const infoProduct = await Product.findOne({
+        _id: id
+    });
+
+    req.flash('success', `Cập nhật trạng thái sản phẩm ${infoProduct.title} thành công!`);
+
+    res.redirect(`back`);
+}

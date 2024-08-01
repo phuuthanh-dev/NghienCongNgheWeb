@@ -2,8 +2,11 @@ extends  ../../layouts/default.pug
 include ../../mixins/filter.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
 
 block main
+    +alert-success()
+
     h1(class="mb-4") Danh sách sản phẩm
 
     .card.mb-3
@@ -49,11 +52,32 @@ block main
                                 td #{item.price}$
                                 td
                                     if(item.status == "active")
-                                        a(href="#" class="badge bg-success") Hoạt động
+                                        a(
+                                            href="javascript:void(0)"
+                                            data-status=item.status
+                                            data-id=item.id
+                                            button-change-status 
+                                            class="badge bg-success"
+                                        ) Hoạt động
                                     else
-                                        a(href="#" class="badge bg-danger") Dừng hoạt động
+                                        a(
+                                            href="javascript:void(0)"
+                                            data-status=item.status
+                                            data-id=item.id
+                                            button-change-status 
+                                            class="badge bg-danger"
+                                        ) Dừng hoạt động
                                 td
                                     button(class="btn btn-warning btn-sm") Sửa
                                     button(class="btn btn-danger btn-sm ms-1") Xóa
 
     +pagination(objectPagination)
+
+    form(
+        form-change-status
+        method="POST"
+        action=""
+        data-path=`${prefixAdmin}/products/change-status`
+    )
+
+    script(src="/admin/js/product.js")
