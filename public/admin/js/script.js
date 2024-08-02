@@ -134,3 +134,29 @@ if (formChangeMulti) {
   });
 }
 // End Form change multi
+
+// Upload Image
+const uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+  const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+  const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
+  const deleteImagePreview = uploadImage.querySelector('#delete-image');
+  const imageContainer = uploadImage.querySelector('.image-container');
+  
+  uploadImageInput.addEventListener("change", () => {
+    const file = uploadImageInput.files[0];
+    if (file) {
+      uploadImagePreview.src = URL.createObjectURL(file);
+      imageContainer.style.display = 'inline-block';
+      deleteImagePreview.style.display = 'block';
+    }
+  });
+
+  deleteImagePreview.addEventListener('click', () => {
+    uploadImageInput.value = '';
+    uploadImagePreview.src = '';
+    imageContainer.style.display = 'none';
+    deleteImagePreview.style.display = 'none';
+  });
+}
+// End Upload Image

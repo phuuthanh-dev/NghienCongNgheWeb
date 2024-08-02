@@ -96,6 +96,7 @@ a {
 
 /* image-preview */
 .image-preview {
+  display: block;
   width: 150px;
   height: auto;
   border: 1px solid #ddd;
@@ -112,4 +113,26 @@ a {
 
 .form-group {
   margin-bottom: 15px;
+}
+
+.image-container {
+  position: relative;
+  display: none;
+}
+
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 2px 5px;
+  font-size: 12px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: darkred;
 }

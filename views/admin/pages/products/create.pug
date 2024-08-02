@@ -1,7 +1,9 @@
 extends ../../layouts/default.pug
-//- include ../../mixins/select-tree.pug
+include ../../mixins/alert.pug
 
 block main
+    +alert-error(5000)
+    
     h1(class="mb-4") #{pageTitle}
 
     form(
@@ -99,11 +101,14 @@ block main
           accept="image/*"
           upload-image-input
         )
-        img(
-          src=""
-          class="image-preview"
-          upload-image-preview
-        )
+        div(class="image-container")
+          img(
+            src=""
+            class="image-preview"
+            upload-image-preview
+          )
+          button(type="button" class="btn btn-danger btn-sm delete-button" id="delete-image" style="display: none;") X
+      
       div(class="form-group")
         label(for="position") Vị trí
         input(
