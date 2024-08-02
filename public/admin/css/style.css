@@ -109,3 +109,7 @@ a {
 }
 
 /* End image-preview */
+
+.form-group {
+  margin-bottom: 15px;
+}
