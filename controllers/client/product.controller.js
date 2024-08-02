@@ -17,3 +17,25 @@ module.exports.index = async (req, res) => {
         products: newProducts
     })
 }
+
+// [GET] /products/detail/:slug
+module.exports.detail = async (req, res) => {
+    const slug = req.params.slug;
+
+    const product = await Product.findOne({
+        slug: slug,
+        deleted: false,
+        status: "active"
+    });
+
+    product.priceNew = ((1 - product.discountPercentage / 100) * product.price).toFixed(0);
+
+    if (product) {
+        res.render("client/pages/products/detail", {
+            pageTitle: product.title,
+            product: product
+        });
+    } else {
+        res.redirect("/");
+    }
+}
