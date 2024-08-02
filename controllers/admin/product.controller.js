@@ -149,6 +149,8 @@ module.exports.createPost = async (req, res) => {
         req.body.position = highestPositionProduct ? highestPositionProduct.position + 1 : 1;
     }
 
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+
     const newProduct = new Product(req.body);
     await newProduct.save();
 
