@@ -7,6 +7,7 @@ include ../../mixins/form-change-multi.pug
 
 block main
     +alert-success(5000)
+    +alert-error(5000)
 
     h1(class="mb-4") Danh sách sản phẩm
 
@@ -113,16 +114,19 @@ block main
                                             class="badge bg-danger"
                                         ) Dừng hoạt động
                                 td
-                                    button(class="btn btn-warning btn-sm") Sửa
+                                    a(
+                                        href=`${prefixAdmin}/products/detail/${item.id}`
+                                        class="btn btn-info btn-sm"
+                                    ) Chi tiết
+                                    a(
+                                        href=`${prefixAdmin}/products/edit/${item.id}`
+                                        class="btn btn-warning btn-sm ms-1"
+                                    ) Sửa
                                     button(
                                         class="btn btn-danger btn-sm ms-1"
                                         button-delete
                                         data-id=item.id
                                     ) Xóa
-                                    a(
-                                        href=`/${prefixAdmin}/products/detail/${item.id}`
-                                        class="btn btn-info btn-sm ms-1"
-                                    ) Chi tiết
 
     +pagination(objectPagination)
 

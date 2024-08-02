@@ -147,16 +147,20 @@ if (uploadImage) {
     const file = uploadImageInput.files[0];
     if (file) {
       uploadImagePreview.src = URL.createObjectURL(file);
-      imageContainer.style.display = 'inline-block';
-      deleteImagePreview.style.display = 'block';
+      if (deleteImagePreview) {
+        imageContainer.style.display = 'inline-block';
+        deleteImagePreview.style.display = 'block';
+      }
     }
   });
 
-  deleteImagePreview.addEventListener('click', () => {
-    uploadImageInput.value = '';
-    uploadImagePreview.src = '';
-    imageContainer.style.display = 'none';
-    deleteImagePreview.style.display = 'none';
-  });
+  if (deleteImagePreview) {
+    deleteImagePreview.addEventListener('click', () => {
+      uploadImageInput.value = '';
+      uploadImagePreview.src = '';
+      imageContainer.style.display = 'none';
+      deleteImagePreview.style.display = 'none';
+    });
+  }
 }
 // End Upload Image

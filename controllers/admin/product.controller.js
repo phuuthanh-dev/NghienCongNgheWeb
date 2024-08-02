@@ -149,14 +149,61 @@ module.exports.createPost = async (req, res) => {
         req.body.position = highestPositionProduct ? highestPositionProduct.position + 1 : 1;
     }
 
-    if (req.file) { 
-        req.body.thumbnail = `/uploads/${req.file.filename}`; 
+    if (req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`;
     }
 
     const newProduct = new Product(req.body);
     await newProduct.save();
 
     req.flash('success', `Thêm sản phẩm ${req.body.title} thành công!`);
-
     res.redirect(`${systemConfig.prefixAdmin}/products`);
+}
+
+// [GET] /admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const product = await Product.findOne({
+            _id: id,
+            deleted: false
+        });
+
+        if (product) {
+            res.render("admin/pages/products/edit", {
+                pageTitle: "Chỉnh sửa sản phẩm",
+                product: product
+            });
+        } else {
+            req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+            res.redirect(`${systemConfig.prefixAdmin}/products`);
+        }
+    } catch (error) {
+        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
+    }
+}
+
+// [PATCH] /admin/products/edit/:id
+module.exports.editPatch = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        req.body.price = parseInt(req.body.price);
+        req.body.discountPercentage = parseInt(req.body.discountPercentage);
+        req.body.stock = parseInt(req.body.stock);
+        req.body.position = parseInt(req.body.position);
+
+        if (req.file) {
+            req.body.thumbnail = `/uploads/${req.file.filename}`;
+        }
+
+        await Product.updateOne({ _id: id }, req.body);
+
+        req.flash('success', `Chỉnh sửa sản phẩm thành công!`);
+    } catch (error) {
+        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+    }
+    res.redirect(`back`);
 }
