@@ -1,5 +1,5 @@
 const express = require('express')
-const dotenv = require("dotenv");
+require("dotenv").config();
 const database = require('./config/database')
 const systemConfig = require('./config/system')
 const routeAdmin = require("./routes/admin/index.route")
@@ -9,7 +9,6 @@ const bodyParser = require('body-parser')
 const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-dotenv.config();
 
 database.connect()
 
