@@ -8,7 +8,7 @@ module.exports.index = async (req, res) => {
     }).sort({ position: "desc" });
 
     const newProducts = products.map(product => {
-        product.priceNew = (product.price - (product.price * product.discountPercentage / 100)).toFixed(2);
+        product.priceNew = (product.price - (product.price * product.discountPercentage / 100)).toFixed(0);
         return product;
     })
 
@@ -18,7 +18,7 @@ module.exports.index = async (req, res) => {
     })
 }
 
-// [GET] /products/detail/:slug
+// [GET] /products/:slug
 module.exports.detail = async (req, res) => {
     const slug = req.params.slug;
 
@@ -28,14 +28,14 @@ module.exports.detail = async (req, res) => {
         status: "active"
     });
 
-    product.priceNew = ((1 - product.discountPercentage / 100) * product.price).toFixed(0);
-
     if (product) {
+        product.priceNew = ((1 - product.discountPercentage / 100) * product.price).toFixed(0);
+
         res.render("client/pages/products/detail", {
             pageTitle: product.title,
             product: product
         });
     } else {
-        res.redirect("/");
+        res.redirect("/products");
     }
 }
