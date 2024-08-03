@@ -16,7 +16,7 @@ database.connect()
 const app = express()
 const port = process.env.PORT
 
-app.set('views', './views')
+app.set("views", `${__dirname}/views`);
 app.set('view engine', 'pug')
 
 // parse application/x-www-form-urlencoded
@@ -36,7 +36,7 @@ app.use(methodOverride('_method'))
 // App locals variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 
-app.use(express.static('public'))
+app.use(express.static(`${__dirname}/public`));
 
 // Routes
 routeClient(app)
