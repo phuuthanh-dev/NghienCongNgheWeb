@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 require("dotenv").config();
 const database = require('./config/database')
 const systemConfig = require('./config/system')
@@ -28,6 +29,9 @@ app.use(bodyParser.json())
 app.use(cookieParser('HKAHLALASGAD'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+
+/* New Route to the TinyMCE Node module */
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // Method override
 app.use(methodOverride('_method'))
