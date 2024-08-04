@@ -38,9 +38,7 @@ module.exports.index = async (req, res) => {
     // Sort
     const sort = {};
     if (req.query.sortKey && req.query.sortValue) {
-        const sortKey = req.query.sortKey;
-        const sortValue = req.query.sortValue;
-        sort[sortKey] = sortValue;
+        sort[req.query.sortKey] = req.query.sortValue;
     } else {
         sort.position = "desc";
     }

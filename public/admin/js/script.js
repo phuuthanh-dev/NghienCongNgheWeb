@@ -142,7 +142,7 @@ if (uploadImage) {
   const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
   const deleteImagePreview = uploadImage.querySelector('#delete-image');
   const imageContainer = uploadImage.querySelector('.image-container');
-  
+
   uploadImageInput.addEventListener("change", () => {
     const file = uploadImageInput.files[0];
     if (file) {
@@ -164,3 +164,39 @@ if (uploadImage) {
   }
 }
 // End Upload Image
+
+// Sort
+const sort = document.querySelector("[sort]");
+if (sort) {
+  const sortSelect = sort.querySelector("[sort-select]");
+  const sortClear = sort.querySelector("[sort-clear]");
+  const url = new URL(window.location.href);
+
+  sortSelect.addEventListener("change", () => {
+    const [sortKey, sortValue] = sortSelect.value.split("-");
+    if (sortKey && sortValue) {
+      url.searchParams.set("sortKey", sortKey);
+      url.searchParams.set("sortValue", sortValue);
+
+      window.location.href = url.href;
+    }
+  });
+
+  // Thêm selected mặc định cho option
+  const defaultSortKey = url.searchParams.get("sortKey");
+  const defaultSortValue = url.searchParams.get("sortValue");
+
+  if (defaultSortKey && defaultSortValue) {
+    const optionSelected = sortSelect.querySelector(`option[value="${defaultSortKey}-${defaultSortValue}"]`);
+    optionSelected.selected = true;
+  }
+
+  if (sortClear) {
+    sortClear.addEventListener("click", () => {
+      url.searchParams.delete("sortKey");
+      url.searchParams.delete("sortValue");
+      window.location.href = url.href;
+    })
+  }
+}
+// End Sort
