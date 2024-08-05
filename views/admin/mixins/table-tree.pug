@@ -33,11 +33,11 @@ mixin table-tree(categories, level = 1, id = '')
         td
             a(
                 class="btn btn-secondary btn-sm"
-                href=`/${prefixAdmin}/products-category/detail/${item.id}`
+                href=`${prefixAdmin}/product-categories/detail/${item._id}`
             ) Chi tiết
             a(
                 class="btn btn-warning btn-sm ms-1"
-                href=`/${prefixAdmin}/products-category/edit/${item.id}`
+                href=`${prefixAdmin}/product-categories/edit/${item._id}`
             ) Sửa
             button(
                 class="btn btn-danger btn-sm ms-1"

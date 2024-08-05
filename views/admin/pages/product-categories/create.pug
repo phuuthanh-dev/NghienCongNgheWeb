@@ -1,13 +1,15 @@
 extends ../../layouts/default.pug
 include ../../mixins/select-tree.pug
+include ../../mixins/alert.pug
 
 block main
+  +alert-success(5000)
+  +alert-error(5000)
   h1(class="mb-4") Thêm mới danh mục sản phẩm
 
   form(
     action=`${prefixAdmin}/product-categories/create`
     method="POST"
-    enctype="multipart/form-data"
   )
     div(class="form-group")
       label(for="title") Tiêu đề
@@ -25,7 +27,7 @@ block main
         id="parent_id"
         class="form-control"
       )
-        option(value="") --- Chọn danh mục cha ---
+        option(disabled selected) --- Chọn danh mục cha ---
         if(categories)
           +select-tree(categories)
     div(class="form-group")
@@ -37,24 +39,6 @@ block main
         name="description"
         rows="5"
         textarea-mce
-      )
-    div(
-      class="form-group"
-      upload-image
-    )
-      label(for="thumbnail") Ảnh
-      input(
-        type="file"
-        class="form-control"
-        id="thumbnail"
-        name="thumbnail"
-        accept="image/*"
-        upload-image-input
-      )
-      img(
-        src=""
-        class="image-preview"
-        upload-image-preview
       )
     div(class="form-group")
       label(for="position") Vị trí

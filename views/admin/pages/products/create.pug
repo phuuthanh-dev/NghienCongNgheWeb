@@ -29,7 +29,7 @@ block main
           class="form-control"
           id="product_category_id"
         )
-          option(value="") -- Chọn danh mục --
+          option(disabled selected) -- Chọn danh mục --
           if(categories)
             +select-tree(categories)
       div(class="form-group form-check form-check-inline")
