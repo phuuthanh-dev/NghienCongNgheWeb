@@ -1,79 +1,33 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/table-tree.pug
 
 block main
-  h1(class="mb-4") Danh mục sản phẩm
+    +alert-success(5000)
+    h1(class="mb-4") Danh mục sản phẩm
 
-  .card.mb-3
-    .card-header Danh sách
-    .card-body
-        .row.mb-3
-            .col-8
-            .col-4
-                a(
-                    href=`${prefixAdmin}/product-categories/create`
-                    class="btn btn-outline-success"
-                ) + Thêm mới
-
-        table(
-            class="table table-hover table-sm table-striped table-bordered"
-        )
-            thead
-            tr
-                th STT
-                th Hình ảnh
-                th Tiêu đề
-                th Vị trí
-                th Trạng thái
-                th Hành động
-
-            tbody
-            each item, index in categories
-                tr
-                td #{index + 1}
-                td
-                    img(
-                    src=item.thumbnail
-                    alt=item.title
-                    width="100px"
-                    height="auto"
-                    )
-                td #{item.title}
-                td
-                    input(
-                    type="number"
-                    value=item.position
-                    style="width: 60px"
-                    min="1"
-                    name="position"
-                    )
-                td
-                    if (item.status === "active")
-                        a(
-                            href="javascript:;"
-                            class="badge bg-success"
-                            data-status="active"
-                            data-id=item.id
-                            button-change-status
-                        ) Hoạt động
-                    else
-                        a(
-                            href="javascript:;"
-                            class="badge bg-danger"
-                            data-status="inactive"
-                            data-id=item.id
-                            button-change-status
-                        ) Dừng hoạt động
-                td
+    .card.mb-3
+        .card-header Danh sách
+        .card-body
+            .row.mb-3
+                .col-8
+                .col-4
                     a(
-                    class="btn btn-secondary btn-sm"
-                    href=`/${prefixAdmin}/products-category/detail/${item.id}`
-                    ) Chi tiết
-                    a(
-                    class="btn btn-warning btn-sm ms-1"
-                    href=`/${prefixAdmin}/products-category/edit/${item.id}`
-                    ) Sửa
-                    button(
-                    class="btn btn-danger btn-sm ms-1"
-                    button-delete
-                    data-id=item.id
-                    ) Xóa
+                        href=`${prefixAdmin}/product-categories/create`
+                        class="btn btn-outline-success"
+                    ) + Thêm mới
+
+            table(
+                class="table table-hover table-sm table-striped table-bordered"
+            )
+                thead
+                    tr
+                        th STT
+                        th Tiêu đề
+                        th Vị trí
+                        th Trạng thái
+                        th Hành động
+
+                tbody    
+                    +table-tree(categories)
+                    

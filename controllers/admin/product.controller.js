@@ -1,8 +1,10 @@
 const Product = require('../../models/product.model');
+const ProductCategory = require("../../models/product-category.model");
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
 const paginationHelper = require('../../helpers/pagination');
 const systemConfig = require("../../config/system");
+const createTreeHelper = require("../../helpers/createTree");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -129,8 +131,15 @@ module.exports.deleteItem = async (req, res) => {
 
 // [GET] /admin/products/create
 module.exports.create = async (req, res) => {
+    const categories = await ProductCategory.find({
+        deleted: false
+    });
+
+    const newCategories = createTreeHelper(categories);
+
     res.render('admin/pages/products/create', {
-        pageTitle: 'Thêm sản phẩm'
+        pageTitle: 'Thêm sản phẩm',
+        categories: newCategories
     });
 }
 
@@ -165,9 +174,16 @@ module.exports.edit = async (req, res) => {
         });
 
         if (product) {
+            const categories = await ProductCategory.find({
+                deleted: false
+            });
+
+            const newCategories = createTreeHelper(categories);
+
             res.render("admin/pages/products/edit", {
                 pageTitle: "Chỉnh sửa sản phẩm",
-                product: product
+                product: product,
+                categories: newCategories
             });
         } else {
             req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!');
@@ -209,9 +225,14 @@ module.exports.detail = async (req, res) => {
         });
 
         if (product) {
+            const productCategory = await ProductCategory.findOne({
+                _id: product.product_category_id
+            });
+            
             res.render("admin/pages/products/detail", {
                 pageTitle: product.title,
-                product: product
+                product: product,
+                productCategory: productCategory
             });
         } else {
             res.redirect(`${systemConfig.prefixAdmin}/products`);
