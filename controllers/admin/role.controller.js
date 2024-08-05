@@ -18,7 +18,7 @@ module.exports.create = async (req, res) => {
     res.render("admin/pages/roles/create", {
         pageTitle: "Tạo mới nhóm quyền",
     });
-};
+}
 
 // [POST] /admin/roles/create
 module.exports.createPost = async (req, res) => {
@@ -27,4 +27,42 @@ module.exports.createPost = async (req, res) => {
 
     req.flash('success', `Thêm nhóm quyền ${req.body.title} thành công!`);
     res.redirect(`${systemConfig.prefixAdmin}/roles`);
-};
+}
+
+// [GET] /admin/roles/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const role = await Role.findOne({
+            _id: id,
+            deleted: false
+        });
+
+        res.render("admin/pages/roles/edit", {
+            pageTitle: "Chỉnh sửa nhóm quyền",
+            role: role
+        });
+    } catch (error) {
+        req.flash("error", "Nhóm quyền không tồn tại!");
+        res.redirect(`${systemConfig.prefixAdmin}/roles`);
+    }
+}
+
+// [PATCH] /admin/roles/edit/:id
+module.exports.editPatch = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        await Role.updateOne({
+            _id: id,
+            deleted: false
+        }, req.body);
+
+        req.flash("success", "Cập nhật thành công!");
+        res.redirect("back");
+    } catch (error) {
+        req.flash("error", "Cập nhật thất bại!");
+        res.redirect(`${systemConfig.prefixAdmin}/roles`);
+    }
+}
