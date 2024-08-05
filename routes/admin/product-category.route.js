@@ -10,8 +10,8 @@ router.get('/create', controller.create)
 
 router.post('/create', validate.createPost, controller.createPost)
 
-router.get("/edit/:id", controller.edit);
+router.get("/edit/:id", controller.edit)
 
-router.patch("/edit/:id", validate.createPost, controller.editPatch);
+router.patch("/edit/:id", validate.createPost, controller.editPatch)
 
 module.exports = router
