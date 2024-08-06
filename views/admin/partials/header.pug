@@ -5,4 +5,8 @@ header.header
         .inner-logo
           a(href=`${prefixAdmin}/dashboard`) ADMIN
 
-      .col-9
+      div(class="col-9 text-end")
+        a(
+          href=`${prefixAdmin}/auth/logout`
+          class="btn btn-danger btn-sm ms-2"
+        ) Đăng xuất
