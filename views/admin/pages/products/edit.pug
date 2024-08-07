@@ -3,6 +3,7 @@ include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main
+  if(role.permissions.includes("products_edit"))
     +alert-success(5000)
     +alert-error(5000)
 
@@ -146,3 +147,5 @@ block main
           type="submit"
           class="btn btn-primary"
         ) Cập nhật
+  else
+    h1(class="mb-4") Bạn không có quyền truy cập trang này

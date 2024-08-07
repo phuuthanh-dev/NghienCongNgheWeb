@@ -3,32 +3,36 @@ include ../../mixins/alert.pug
 include ../../mixins/table-tree.pug
 
 block main
-    +alert-success(5000)
-    +alert-error(5000)
-    h1(class="mb-4") Danh mục sản phẩm
+    if(role.permissions.includes("product-categories_view"))
+        +alert-success(5000)
+        +alert-error(5000)
+        h1(class="mb-4") Danh mục sản phẩm
 
-    .card.mb-3
-        .card-header Danh sách
-        .card-body
-            .row.mb-3
-                .col-8
-                .col-4
-                    a(
-                        href=`${prefixAdmin}/product-categories/create`
-                        class="btn btn-outline-success"
-                    ) + Thêm mới
+        .card.mb-3
+            .card-header Danh sách
+            .card-body
+                .row.mb-3
+                    .col-8
+                    .col-4
+                        if(role.permissions.includes("product-categories_create"))
+                            a(
+                                href=`${prefixAdmin}/product-categories/create`
+                                class="btn btn-outline-success"
+                            ) + Thêm mới
 
-            table(
-                class="table table-hover table-sm table-striped table-bordered"
-            )
-                thead
-                    tr
-                        th STT
-                        th Tiêu đề
-                        th Vị trí
-                        th Trạng thái
-                        th Hành động
+                table(
+                    class="table table-hover table-sm table-striped table-bordered"
+                )
+                    thead
+                        tr
+                            th STT
+                            th Tiêu đề
+                            th Vị trí
+                            th Trạng thái
+                            th Hành động
 
-                tbody    
-                    +table-tree(categories)
-                    
+                    tbody    
+                        +table-tree(categories)
+    else
+        h1(class="mb-4") Bạn không có quyền truy cập trang này
+                        

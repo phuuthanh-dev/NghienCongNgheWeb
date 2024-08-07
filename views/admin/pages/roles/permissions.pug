@@ -2,223 +2,226 @@ extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
 block main
-  +alert-success(5000)
-  +alert-error(5000)
-  h1(class="mb-4") Phân quyền
+  if(role.permissions.includes("roles_permissions"))
+    +alert-success(5000)
+    +alert-error(5000)
+    h1(class="mb-4") Phân quyền
 
-  if(roles)
-    div(class="text-right")
-      button(
-        type="submit"
-        class="btn btn-primary mb-3"
-        button-submit
-      ) Cập nhật
+    if(roles)
+      div(class="text-right")
+        button(
+          type="submit"
+          class="btn btn-primary mb-3"
+          button-submit
+        ) Cập nhật
 
-    table(
-      class="table table-hover table-sm table-striped table-bordered"
-      table-permissions
-    )
-      thead
-        tr
-          th Tính năng
-          each item in roles
-            th(
-              class="text-center"
-              role-id=item.id
-            ) #{item.title}
-      tbody
-        //- Danh sách sản phẩm
-        tr
-          td(colspan="4")
-            b Danh sách sản phẩm
-        tr
-          td Xem
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id 
-                data-name="products_view"
-                checked=(item.permissions.includes("products_view") ? true : false)
-              )
-        tr
-          td Thêm mới
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="products_create"
-                checked=(item.permissions.includes("products_create") ? true : false)
-              )
-        tr
-          td Chỉnh sửa
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="products_edit"
-                checked=(item.permissions.includes("products_edit") ? true : false)
-              )
-        tr
-          td Xóa
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="products_delete"
-                checked=(item.permissions.includes("products_delete") ? true : false)
-              )
-        
-        //- Danh mục sản phẩm
-        tr
-          td(colspan="4")
-            b Danh mục sản phẩm
-        tr
-          td Xem
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id 
-                data-name="product-categories_view"
-                checked=(item.permissions.includes("product-categories_view") ? true : false)
-              )
-        tr
-          td Thêm mới
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="product-categories_create"
-                checked=(item.permissions.includes("product-categories_create") ? true : false)
-              )
-        tr
-          td Chỉnh sửa
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="product-categories_edit"
-                checked=(item.permissions.includes("product-categories_edit") ? true : false)
-              )
-        tr
-          td Xóa
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="product-categories_delete"
-                checked=(item.permissions.includes("product-categories_delete") ? true : false)
-              )
-        
-        //- Nhóm quyền
-        tr
-          td(colspan="4")
-            b Nhóm quyền
-        tr
-          td Xem
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id 
-                data-name="roles_view"
-                checked=(item.permissions.includes("roles_view") ? true : false)
-              )
-        tr
-          td Thêm mới
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="roles_create"
-                checked=(item.permissions.includes("roles_create") ? true : false)
-              )
-        tr
-          td Chỉnh sửa
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="roles_edit"
-                checked=(item.permissions.includes("roles_edit") ? true : false)
-              )
-        tr
-          td Xóa
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="roles_delete"
-                checked=(item.permissions.includes("roles_delete") ? true : false)
-              )
-        tr
-          td Phân quyền
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="roles_permissions"
-                checked=(item.permissions.includes("roles_permissions") ? true : false)
-              )
+      table(
+        class="table table-hover table-sm table-striped table-bordered"
+        table-permissions
+      )
+        thead
+          tr
+            th Tính năng
+            each item in roles
+              th(
+                class="text-center"
+                role-id=item.id
+              ) #{item.title}
+        tbody
+          //- Danh sách sản phẩm
+          tr
+            td(colspan="4")
+              b Danh sách sản phẩm
+          tr
+            td Xem
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id 
+                  data-name="products_view"
+                  checked=(item.permissions.includes("products_view") ? true : false)
+                )
+          tr
+            td Thêm mới
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="products_create"
+                  checked=(item.permissions.includes("products_create") ? true : false)
+                )
+          tr
+            td Chỉnh sửa
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="products_edit"
+                  checked=(item.permissions.includes("products_edit") ? true : false)
+                )
+          tr
+            td Xóa
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="products_delete"
+                  checked=(item.permissions.includes("products_delete") ? true : false)
+                )
+          
+          //- Danh mục sản phẩm
+          tr
+            td(colspan="4")
+              b Danh mục sản phẩm
+          tr
+            td Xem
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id 
+                  data-name="product-categories_view"
+                  checked=(item.permissions.includes("product-categories_view") ? true : false)
+                )
+          tr
+            td Thêm mới
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="product-categories_create"
+                  checked=(item.permissions.includes("product-categories_create") ? true : false)
+                )
+          tr
+            td Chỉnh sửa
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="product-categories_edit"
+                  checked=(item.permissions.includes("product-categories_edit") ? true : false)
+                )
+          tr
+            td Xóa
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="product-categories_delete"
+                  checked=(item.permissions.includes("product-categories_delete") ? true : false)
+                )
+          
+          //- Nhóm quyền
+          tr
+            td(colspan="4")
+              b Nhóm quyền
+          tr
+            td Xem
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id 
+                  data-name="roles_view"
+                  checked=(item.permissions.includes("roles_view") ? true : false)
+                )
+          tr
+            td Thêm mới
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="roles_create"
+                  checked=(item.permissions.includes("roles_create") ? true : false)
+                )
+          tr
+            td Chỉnh sửa
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="roles_edit"
+                  checked=(item.permissions.includes("roles_edit") ? true : false)
+                )
+          tr
+            td Xóa
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="roles_delete"
+                  checked=(item.permissions.includes("roles_delete") ? true : false)
+                )
+          tr
+            td Phân quyền
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="roles_permissions"
+                  checked=(item.permissions.includes("roles_permissions") ? true : false)
+                )
 
-        //- Tài khoản admin
-        tr
-          td(colspan="4")
-            b Tài khoản admin
-        tr
-          td Xem
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id 
-                data-name="accounts_view"
-                checked=(item.permissions.includes("accounts_view") ? true : false)
-              )
-        tr
-          td Thêm mới
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="accounts_create"
-                checked=(item.permissions.includes("accounts_create") ? true : false)
-              )
-        tr
-          td Chỉnh sửa
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="accounts_edit"
-                checked=(item.permissions.includes("accounts_edit") ? true : false)
-              )
-        tr
-          td Xóa
-          each item in roles
-            td(class="text-center")
-              input(
-                type="checkbox" 
-                data-id=item.id
-                data-name="accounts_delete"
-                checked=(item.permissions.includes("accounts_delete") ? true : false)
-              )
-  form(method="POST" form-change-permissions action=`${prefixAdmin}/roles/permissions?_method=PATCH`)
-    input(
-      type="hidden"
-      name="permissions"
-    )
-  script(src="/admin/js/role.js") 
+          //- Tài khoản admin
+          tr
+            td(colspan="4")
+              b Tài khoản admin
+          tr
+            td Xem
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id 
+                  data-name="accounts_view"
+                  checked=(item.permissions.includes("accounts_view") ? true : false)
+                )
+          tr
+            td Thêm mới
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="accounts_create"
+                  checked=(item.permissions.includes("accounts_create") ? true : false)
+                )
+          tr
+            td Chỉnh sửa
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="accounts_edit"
+                  checked=(item.permissions.includes("accounts_edit") ? true : false)
+                )
+          tr
+            td Xóa
+            each item in roles
+              td(class="text-center")
+                input(
+                  type="checkbox" 
+                  data-id=item.id
+                  data-name="accounts_delete"
+                  checked=(item.permissions.includes("accounts_delete") ? true : false)
+                )
+    form(method="POST" form-change-permissions action=`${prefixAdmin}/roles/permissions?_method=PATCH`)
+      input(
+        type="hidden"
+        name="permissions"
+      )
+    script(src="/admin/js/role.js")
+  else 
+    h1(class="mb-4") Bạn không có quyền truy cập trang này

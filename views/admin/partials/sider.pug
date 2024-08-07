@@ -3,15 +3,18 @@
     ul 
       li
         a(href=`${prefixAdmin}/dashboard`) Tổng quan
-      li
-        a(href=`${prefixAdmin}/products`) Danh sách sản phẩm
-      li
-        a(href=`${prefixAdmin}/product-categories`) Danh mục sản phẩm
-      li
-        a(href=`${prefixAdmin}/roles`) Nhóm quyền
-      li
-        a(href=`${prefixAdmin}/roles/permissions`) Phân quyền
-      li
-        a(href=`${prefixAdmin}/accounts`) Tài khoản
-      li
-        a(href=`${prefixAdmin}/settings/general`) Cài đặt chung
+      if(role.permissions.includes("products_view"))
+        li
+          a(href=`${prefixAdmin}/products`) Danh sách sản phẩm
+      if(role.permissions.includes("product-categories_view"))
+        li
+          a(href=`${prefixAdmin}/product-categories`) Danh mục sản phẩm
+      if(role.permissions.includes("roles_view"))
+        li
+          a(href=`${prefixAdmin}/roles`) Nhóm quyền
+      if(role.permissions.includes("roles_permissions"))
+        li
+          a(href=`${prefixAdmin}/roles/permissions`) Phân quyền
+      if(role.permissions.includes("accounts_view"))
+        li
+          a(href=`${prefixAdmin}/accounts`) Tài khoản

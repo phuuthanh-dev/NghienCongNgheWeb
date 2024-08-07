@@ -1,40 +1,44 @@
 extends ../../layouts/default.pug
 
 block main
-  if (product.title)
-    h1(class="mb-4") #{product.title}
+  if(role.permissions.includes("products_view"))
+    if (product.title)
+      h1(class="mb-4") #{product.title}
 
-  if (productCategory)
-    div(class="mb-4") Danh mục: <b>#{productCategory.title}</b>
+    if (productCategory)
+      div(class="mb-4") Danh mục: <b>#{productCategory.title}</b>
 
-  if (product.price)
-    div(class="mb-4") Giá: <b>#{product.price}$</b>
+    if (product.price)
+      div(class="mb-4") Giá: <b>#{product.price}$</b>
 
-  if (product.discountPercentage)
-    div(class="mb-4") Giảm giá: <b>#{product.discountPercentage}%</b>
+    if (product.discountPercentage)
+      div(class="mb-4") Giảm giá: <b>#{product.discountPercentage}%</b>
 
-  if (product.stock)
-    div(class="mb-4") Còn lại: <b>#{product.stock}</b>
+    if (product.stock)
+      div(class="mb-4") Còn lại: <b>#{product.stock}</b>
 
-  if (product.thumbnail)
-    div(class="mb-4")
-      img(
-        src=product.thumbnail
-        style="width: 100px"
-      )
+    if (product.thumbnail)
+      div(class="mb-4")
+        img(
+          src=product.thumbnail
+          style="width: 100px"
+        )
 
-  if (product.status)
-    div(class="mb-4")
-      span Trạng thái:
-      if (product.status === "active")
-        span(class="badge bg-success ms-1") Hoạt động
-      else
-        span(class="badge bg-danger ms-1") Dừng hoạt động
+    if (product.status)
+      div(class="mb-4")
+        span Trạng thái:
+        if (product.status === "active")
+          span(class="badge bg-success ms-1") Hoạt động
+        else
+          span(class="badge bg-danger ms-1") Dừng hoạt động
 
-  if (product.position)
-    div(class="mb-4") Vị trí: <b>#{product.position}</b>
+    if (product.position)
+      div(class="mb-4") Vị trí: <b>#{product.position}</b>
 
-  if (product.description)
-    div(class="mb-4") !{product.description}
+    if (product.description)
+      div(class="mb-4") !{product.description}
 
-  a(href=`${prefixAdmin}/products/edit/${product.id}` class="btn btn-warning") Chỉnh sửa
+    a(href=`${prefixAdmin}/products/edit/${product.id}` class="btn btn-warning") Chỉnh sửa
+
+  else 
+    h1(class="mb-4") Bạn không có quyền truy cập trang này
