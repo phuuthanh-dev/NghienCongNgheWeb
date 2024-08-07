@@ -1,0 +1,5 @@
+mixin formatDateTime(time)
+    div #{moment(time).format("DD/MM/YY HH:mm:ss")}
+
+mixin formatDate(time)
+    div #{moment(time).format("DD/MM/YY")}

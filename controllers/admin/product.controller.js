@@ -1,4 +1,5 @@
-const Product = require('../../models/product.model');
+const Product = require('../../models/product.model')
+const Account = require("../../models/account.model")
 const ProductCategory = require("../../models/product-category.model");
 const filterStatusHelper = require('../../helpers/filterStatus');
 const searchHelper = require('../../helpers/search');
@@ -51,6 +52,28 @@ module.exports.index = async (req, res) => {
         .limit(objectPagination.itemsPerPage)
         .skip(objectPagination.skip)
         .sort(sort);
+
+    for (const item of products) {
+        // Người tạo
+        if (item.createdBy) {
+            const accountCreated = await Account.findOne({
+                _id: item.createdBy
+            });
+            item.createdByFullName = accountCreated.fullName;
+        } else {
+            item.createdByFullName = "";
+        }
+
+        // Người cập nhật
+        if (item.updatedBy) {
+            const accountUpdated = await Account.findOne({
+                _id: item.updatedBy
+            });
+            item.updatedByFullName = accountUpdated.fullName;
+        } else {
+            item.updatedByFullName = "";
+        }
+    }
 
     res.render('admin/pages/products/index', {
         pageTitle: 'Danh sách sản phẩm',
@@ -145,22 +168,26 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
-    req.body.price = parseInt(req.body.price);
-    req.body.discountPercentage = parseInt(req.body.discountPercentage);
-    req.body.stock = parseInt(req.body.stock);
+    if (res.locals.role.permissions.includes("products_create")) {
+        req.body.price = parseInt(req.body.price);
+        req.body.discountPercentage = parseInt(req.body.discountPercentage);
+        req.body.stock = parseInt(req.body.stock);
 
-    if (req.body.position) {
-        req.body.position = parseInt(req.body.position);
-    } else {
-        const highestPositionProduct = await Product.findOne().sort({ position: "desc" });
-        req.body.position = highestPositionProduct ? highestPositionProduct.position + 1 : 1;
+        if (req.body.position) {
+            req.body.position = parseInt(req.body.position);
+        } else {
+            const highestPositionProduct = await Product.findOne().sort({ position: "desc" });
+            req.body.position = highestPositionProduct ? highestPositionProduct.position + 1 : 1;
+        }
+
+        req.body.createdBy = res.locals.account.id
+
+        const newProduct = new Product(req.body);
+        await newProduct.save();
+
+        req.flash('success', `Thêm sản phẩm ${req.body.title} thành công!`);
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
     }
-
-    const newProduct = new Product(req.body);
-    await newProduct.save();
-
-    req.flash('success', `Thêm sản phẩm ${req.body.title} thành công!`);
-    res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
 
 // [GET] /admin/products/edit/:id
@@ -197,21 +224,25 @@ module.exports.edit = async (req, res) => {
 
 // [PATCH] /admin/products/edit/:id
 module.exports.editPatch = async (req, res) => {
-    try {
-        const id = req.params.id;
+    if (res.locals.role.permissions.includes("products_edit")) {
+        try {
+            const id = req.params.id;
 
-        req.body.price = parseInt(req.body.price);
-        req.body.discountPercentage = parseInt(req.body.discountPercentage);
-        req.body.stock = parseInt(req.body.stock);
-        req.body.position = parseInt(req.body.position);
+            req.body.price = parseInt(req.body.price);
+            req.body.discountPercentage = parseInt(req.body.discountPercentage);
+            req.body.stock = parseInt(req.body.stock);
+            req.body.position = parseInt(req.body.position);
 
-        await Product.updateOne({ _id: id }, req.body);
+            req.body.updatedBy = res.locals.account.id;
 
-        req.flash('success', `Chỉnh sửa sản phẩm thành công!`);
-    } catch (error) {
-        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+            await Product.updateOne({ _id: id }, req.body);
+
+            req.flash('success', `Chỉnh sửa sản phẩm thành công!`);
+        } catch (error) {
+            req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+        }
+        res.redirect(`back`);
     }
-    res.redirect(`back`);
 }
 
 // [GET] /admin/products/detail/:id
@@ -228,7 +259,7 @@ module.exports.detail = async (req, res) => {
             const productCategory = await ProductCategory.findOne({
                 _id: product.product_category_id
             });
-            
+
             res.render("admin/pages/products/detail", {
                 pageTitle: product.title,
                 product: product,

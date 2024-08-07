@@ -43,12 +43,12 @@ mixin table-tree(categories, level = 1, id = '')
                 class="btn btn-secondary btn-sm"
                 href=`${prefixAdmin}/product-categories/detail/${item._id}`
             ) Chi tiết
-            if(role.permissions.includes("product-categories-edit"))
+            if(role.permissions.includes("product-categories_edit"))
                 a(
                     class="btn btn-warning btn-sm ms-1"
                     href=`${prefixAdmin}/product-categories/edit/${item._id}`
                 ) Sửa
-            if(role.permissions.includes("product-categories-delete"))
+            if(role.permissions.includes("product-categories_delete"))
                 button(
                     class="btn btn-danger btn-sm ms-1"
                     button-delete
