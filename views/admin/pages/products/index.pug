@@ -58,7 +58,7 @@ block main
                                 th Vị trí
                                 th Trạng thái
                                 th Tạo bởi
-                                th Cập nhật
+                                th Cập nhật gần nhất
                                 th Hành động
                         tbody
                             each item, index in products
@@ -110,10 +110,14 @@ block main
                                                 span(class="badge bg-danger") Dừng hoạt động
                                     td
                                         span #{item.createdByFullName}
-                                        +formatDateTime(item.createdAt)
+                                        +formatDateTime(item.createdBy.createdAt)
                                     td
-                                        span #{item.updatedByFullName}
-                                        +formatDateTime(item.updatedAt)
+                                        - const updatedBy = item.updatedBy.slice(-1)[0]
+
+                                        if(updatedBy)
+                                            span #{updatedBy.accountFullName}
+                                            +formatDateTime(updatedBy.updatedAt)
+                                        
                                     td
                                         a(
                                             href=`${prefixAdmin}/products/detail/${item.id}`
