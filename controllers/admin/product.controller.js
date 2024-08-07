@@ -57,7 +57,7 @@ module.exports.index = async (req, res) => {
         // Người tạo
         if (item.createdBy) {
             const accountCreated = await Account.findOne({
-                _id: item.createdBy
+                _id: item.createdBy.account_id
             });
             item.createdByFullName = accountCreated.fullName;
         } else {
@@ -119,7 +119,11 @@ module.exports.changeMulti = async (req, res) => {
             break;
         case "delete-all":
             await Product.updateMany({ _id: { $in: ids } }, {
-                deleted: true
+                deleted: true,
+                deletedBy: {
+                    account_id: res.locals.account.id,
+                    deletedAt: new Date()
+                }
             });
             req.flash('success', 'Xóa sản phẩm thành công!');
             break;
@@ -144,7 +148,11 @@ module.exports.deleteItem = async (req, res) => {
     await Product.updateOne({
         _id: id
     }, {
-        deleted: true
+        deleted: true,
+        deletedBy: {
+            account_id: res.locals.account.id,
+            deletedAt: new Date()
+        }
     });
 
     req.flash('success', `Xóa sản phẩm thành công!`);
@@ -180,7 +188,9 @@ module.exports.createPost = async (req, res) => {
             req.body.position = highestPositionProduct ? highestPositionProduct.position + 1 : 1;
         }
 
-        req.body.createdBy = res.locals.account.id
+        req.body.createdBy = {
+            account_id: res.locals.account.id
+        }
 
         const newProduct = new Product(req.body);
         await newProduct.save();
