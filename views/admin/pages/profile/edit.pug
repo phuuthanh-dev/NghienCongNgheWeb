@@ -1,0 +1,60 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert-success(5000)
+    +alert-error(5000)
+    h1(class="mb-4") Cập nhật thông tin cá nhân
+
+    form(
+        method="POST" 
+        action=`${prefixAdmin}/profile/edit?_method=PATCH` 
+        enctype="multipart/form-data"
+    )
+        .form-group
+            label(for="fullName") Họ tên
+            input#fullName.form-control(type="text" name="fullName" value=account.fullName)
+        
+        .form-group
+            label(for="email") Email
+            input#email.form-control(type="email" name="email" value=account.email)
+
+        .form-group
+            label(for="password") Password
+            input#password.form-control(type="password" name="password")
+        
+        .form-group
+            label(for="phone") Số điện thoại
+            input#phone.form-control(type="text" name="phone" value=account.phone)
+        
+        .form-group(upload-image)
+            label(for="avatar") Ảnh đại diện
+            input#avatar.form-control(type="file" name="avatar" upload-image-input accept="image/*")
+            if account.avatar
+                img(src=account.avatar width="150px" class="mb-3" upload-image-preview class="image-preview")
+        
+        .form-group.form-check.form-check-inline
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusActive"
+                name="status"
+                value="active"
+                checked=(account.status == "active" ? true : false)
+            )
+            label(for="statusActive" class="form-check-label") Hoạt động
+
+        .form-group.form-check.form-check-inline
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusInActive"
+                name="status"
+                value="inactive"
+                checked=(account.status == "inactive" ? true : false)
+            )
+            label(for="statusInActive" class="form-check-label") Dừng hoạt động
+        
+        .form-group
+            button.btn.btn-primary(type="submit") Cập nhật
+            a(href=`${prefixAdmin}/profile` class="btn btn-secondary ms-2") Quay lại
