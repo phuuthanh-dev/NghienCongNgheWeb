@@ -6,6 +6,7 @@ include ../../mixins/alert.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/sort.pug
 include ../../mixins/moment.pug
+include ../../mixins/format-price.pug
 
 block main
     if(role.permissions.includes("products_view"))
@@ -74,7 +75,8 @@ block main
                                         height="auto"
                                         )
                                     td #{item.title}
-                                    td #{item.price}$
+                                    td
+                                        +formatPrice(item.price)
                                     if(role.permissions.includes("products_edit"))
                                         td
                                             input(

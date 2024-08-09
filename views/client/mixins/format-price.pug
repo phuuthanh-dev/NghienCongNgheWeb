@@ -1,0 +1,3 @@
+mixin formatPrice(price)
+    - var formattedPrice = Number(price).toLocaleString('vi-VN') + 'đ'
+    | #{formattedPrice}
