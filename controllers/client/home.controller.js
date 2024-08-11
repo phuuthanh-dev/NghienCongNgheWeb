@@ -1,4 +1,5 @@
 const Product = require('../../models/product.model');
+const productHelper = require('../../helpers/product');
 
 // [GET] /
 module.exports.index = async (req, res) => {
@@ -12,9 +13,7 @@ module.exports.index = async (req, res) => {
         .limit(6)
         .select("-description");
 
-    for (const item of productsFeatured) {
-        item.priceNew = ((1 - item.discountPercentage / 100) * item.price).toFixed(0);
-    }
+    const newProductsFeatured = productHelper.priceNewProducts(productsFeatured);
 
     const productsNew = await Product
         .find({
@@ -25,14 +24,11 @@ module.exports.index = async (req, res) => {
         .limit(6)
         .select("-description");
 
-    for (const item of productsNew) {
-        item.priceNew = ((1 - item.discountPercentage / 100) * item.price).toFixed(0);
-    }
-
+    const newProductsNew = productHelper.priceNewProducts(productsNew);
 
     res.render('client/pages/home/index', {
         pageTitle: 'Trang chủ',
-        productsFeatured: productsFeatured,
-        productsNew: productsNew
+        productsFeatured: newProductsFeatured,
+        productsNew: newProductsNew
     })
 }

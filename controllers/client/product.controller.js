@@ -1,5 +1,7 @@
 const ProductCategory = require("../../models/product-category.model");
 const Product = require('../../models/product.model');
+const productHelper = require('../../helpers/product');
+const productCategoryHelper = require('../../helpers/product-category');
 
 // [GET] /products
 module.exports.index = async (req, res) => {
@@ -8,10 +10,7 @@ module.exports.index = async (req, res) => {
         deleted: false
     }).sort({ position: "desc" });
 
-    const newProducts = products.map(product => {
-        product.priceNew = (product.price - (product.price * product.discountPercentage / 100)).toFixed(0);
-        return product;
-    })
+    const newProducts = productHelper.priceNewProducts(products);
 
     res.render('client/pages/products/index', {
         pageTitle: 'Danh sách sản phẩm',
@@ -30,8 +29,17 @@ module.exports.detail = async (req, res) => {
     });
 
     if (product) {
-        product.priceNew = ((1 - product.discountPercentage / 100) * product.price).toFixed(0);
+        if (product.product_category_id) {
+            const category = await ProductCategory.findOne({
+                _id: product.product_category_id,
+                status: "active",
+                deleted: false
+            });
+            product.category = category;
+        }
 
+        product.priceNew = productHelper.priceNewProduct(product);
+        
         res.render("client/pages/products/detail", {
             pageTitle: product.title,
             product: product
@@ -51,31 +59,14 @@ module.exports.category = async (req, res) => {
         deleted: false
     });
 
-
-    const allSubCategory = [];
-
-    const getSubCategory = async (currentId) => {
-        const subCategory = await ProductCategory.find({
-            parent_id: currentId,
-            status: "active",
-            deleted: false
-        });
-
-
-        for (const sub of subCategory) {
-            allSubCategory.push(sub.id);
-            await getSubCategory(sub.id);
-        }
-    }
-
-    await getSubCategory(category.id);
-
+    const allSubCategoryId = (await productCategoryHelper.getSubCategory(category.id)).map(item => item.id);
+    
     const products = await Product
         .find({
             product_category_id: {
                 $in: [
                     category.id,
-                    ...allSubCategory
+                    ...allSubCategoryId
                 ]
             },
             status: "active",
