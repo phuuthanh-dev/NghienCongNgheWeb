@@ -36,7 +36,7 @@ header.header
                             if(layoutProductCategories)
                                 +sub-menu(layoutProductCategories, pathProducts)
                         li
-                            a(href="/cart") Giỏ hàng
+                            a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.products.length : 0})
                         if(user)
                             li
                                 a(href="/user/profile") #{user.fullName}
