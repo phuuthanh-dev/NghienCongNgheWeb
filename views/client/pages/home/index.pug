@@ -18,7 +18,7 @@ block main
             .inner-content
                 h3.inner-title
                     a(href=`/products/detail/${item.slug}`) #{item.title}
-                .inner-price-new 
+                .inner-price-new
                     +formatPrice(item.priceNew)
                 if(item.discountPercentage > 0)
                     .inner-price-old

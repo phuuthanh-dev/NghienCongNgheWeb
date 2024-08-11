@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/format-price.pug
 
 block main
   .product-detail
@@ -7,7 +8,7 @@ block main
       .row
         .col-6
           .inner-thumb
-            img(src=product.thumbnail, alt=product.title, style="width: 100%; height: 600px;")
+            img(src=product.thumbnail, alt=product.title, style="object-fit: cover; width: 100%; height: 100%")
         .col-6
           h1(class="inner-title") #{product.title}
 
@@ -17,10 +18,12 @@ block main
               a(href=`/products/${product.category.slug}`) #{product.category.title}
 
           if (product.priceNew)
-            div(class="inner-price-new") Giá mới: #{product.priceNew}$
+            div(class="inner-price-new") Giá mới: 
+              +formatPrice(product.priceNew)
 
           if (product.price)
-            div(class="inner-price-old") Giá cũ: #{product.price}$
+            div(class="inner-price-old") Giá cũ: 
+              +formatPrice(product.price)
 
           if (product.discountPercentage)
             div(class="inner-percent") Giảm tới <span>#{product.discountPercentage}%</span>

@@ -85,6 +85,10 @@ module.exports.index = async (req, res) => {
 
 // [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
+    if (!res.locals.role.permissions.includes("products_edit")) {
+        res.send("Không có quyền truy cập.");
+        return;
+    }
     const status = req.params.status;
     const id = req.params.id;
 
@@ -109,6 +113,10 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
+    if (!res.locals.role.permissions.includes("products_edit")) {
+        res.send("Không có quyền truy cập.");
+        return;
+    }
     const type = req.body.type;
     let ids = req.body.ids.split(", ");
 
@@ -152,21 +160,23 @@ module.exports.changeMulti = async (req, res) => {
 
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
-    const id = req.params.id;
+    if (res.locals.role.permissions.includes("products_delete")) {
+        const id = req.params.id;
 
-    await Product.updateOne({
-        _id: id
-    }, {
-        deleted: true,
-        deletedBy: {
-            account_id: res.locals.account.id,
-            deletedAt: new Date()
-        }
-    });
+        await Product.updateOne({
+            _id: id
+        }, {
+            deleted: true,
+            deletedBy: {
+                account_id: res.locals.account.id,
+                deletedAt: new Date()
+            }
+        });
 
-    req.flash('success', `Xóa sản phẩm thành công!`);
+        req.flash('success', `Xóa sản phẩm thành công!`);
 
-    res.redirect('back');
+        res.redirect('back');
+    }
 }
 
 // [GET] /admin/products/create
