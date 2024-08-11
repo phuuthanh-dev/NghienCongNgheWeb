@@ -219,7 +219,7 @@ a {
 
 /* Show Alert */
 [show-alert] {
-  position: fixed;
+  position: fixed!important;
   top: 70px;
   right: 15px;
   z-index: 9999;
@@ -239,6 +239,18 @@ a {
     right: -100%;
     display: none;
   }
+}
+
+[show-alert] [close-alert] {
+  background: #ffffffc4;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 50%;
+  cursor: pointer;
 }
 /* End Show Alert */
 
