@@ -22,7 +22,7 @@ if (btnGoBack && btnGoBack.length > 0) {
   btnGoBack.forEach((btn) => {
     btn.addEventListener("click", () => {
       console.log(history);
-      
+
       // window.history.back();
     });
   });
