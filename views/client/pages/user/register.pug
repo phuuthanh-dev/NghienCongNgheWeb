@@ -3,16 +3,24 @@ include ../../mixins/alert.pug
 
 block main
   +alert-error(5000)
-  +alert-success(5000)
 
   .container.my-5
     .row.justify-content-center
       .col-8
-        h1(class="text-center") Đăng nhập tài khoản
+        h1(class="text-center") Đăng ký tài khoản
         form(
-          action="/user/login"
+          action="/user/register"
           method="POST"
         )
+          div(class="form-group mb-3")
+            label(for="fullName") Họ và tên
+            input(
+              type="text"
+              class="form-control"
+              id="fullName"
+              name="fullName"
+              required
+            )
           div(class="form-group mb-3")
             label(for="email") Email
             input(
@@ -31,10 +39,9 @@ block main
               name="password"
               required
             )
-          div(class="form-group")
+          div(class="form-group mb-3")
             button(
               type="submit"
               class="btn btn-primary btn-block"
-            ) Đăng nhập
-            a(class="btn btn-dark ms-2" href="/user/register") Đăng ký tài khoản mới
-        a(href="/user/password/forgot") Quên mật khẩu?
+            ) Đăng ký
+            a(class="btn btn-dark ms-2" href="/user/login") Đăng nhập tài khoản
