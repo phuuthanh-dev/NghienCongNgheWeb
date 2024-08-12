@@ -6,7 +6,7 @@ if (tableCart) {
         input.addEventListener("change", () => {
             const quantity = input.value;
             const productId = input.getAttribute("item-id");
-            if (quantity >= 1) {
+            if (quantity > 0) {
                 window.location.href = `/cart/update/${productId}/${quantity}`;
             } else {
                 input.value = 1;
