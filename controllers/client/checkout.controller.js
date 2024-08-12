@@ -55,6 +55,24 @@ module.exports.order = async (req, res) => {
         };
 
         products.push(objectProduct);
+
+        // Update product quantity and status
+        const newQuantity = productInfo.stock - item.quantity;
+
+        if (newQuantity <= 0) {
+            await Product.updateOne({
+                _id: item.product_id
+            }, {
+                stock: 0,
+                status: "inactive"
+            });
+        } else {
+            await Product.updateOne({
+                _id: item.product_id
+            }, {
+                stock: newQuantity
+            });
+        }
     }
 
     const dataOrder = {
@@ -94,7 +112,7 @@ module.exports.success = async (req, res) => {
 
             product.title = productInfo.title;
             product.thumbnail = productInfo.thumbnail;
-            product.priceNew = (product.price * (100 - product.discountPercentage) / 100).toFixed(0);
+            product.priceNew = productHelper.priceNewProduct(productInfo);
             product.totalPrice = product.priceNew * product.quantity;
 
             order.totalPrice += product.totalPrice;
