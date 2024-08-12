@@ -97,10 +97,8 @@ module.exports.order = async (req, res) => {
 // [GET] /checkout/success/:orderId
 module.exports.success = async (req, res) => {
     try {
-        const orderId = req.params.orderId;
-
         const order = await Order.findOne({
-            _id: orderId
+            _id: req.params.orderId
         });
 
         order.totalPrice = 0;
@@ -108,7 +106,7 @@ module.exports.success = async (req, res) => {
         for (const product of order.products) {
             const productInfo = await Product.findOne({
                 _id: product.product_id
-            });
+            }).select("thumbnail title");
 
             product.title = productInfo.title;
             product.thumbnail = productInfo.thumbnail;
