@@ -1,6 +1,6 @@
 include ../mixins/sub-menu.pug
 
-header.header
+header.header(style='background: rgb(51, 51, 51);')
     .container
         .row.align-items-center
             .col-3
@@ -29,21 +29,21 @@ header.header
                 .inner-menu
                     ul
                         li
-                            a(href="/") Trang chủ
+                            a(href="/" style='color: white;') Trang chủ
                         li(class="sub-menu")
                             -const pathProducts = "/products"
-                            a(href=pathProducts) Sản phẩm
+                            a(href=pathProducts style='color: white;') Sản phẩm
                             if(layoutProductCategories)
                                 +sub-menu(layoutProductCategories, pathProducts)
                         li
-                            a(href="/cart") Giỏ hàng (#{miniCart ? miniCart.products.length : 0})
+                            a(href="/cart" style='color: white;') Giỏ hàng (#{miniCart ? miniCart.products.length : 0})
                         if(user)
                             li
-                                a(href="/user/profile") #{user.fullName}
+                                a(href="/user/profile" style='color: white;') #{user.fullName}
                             li
-                                a(href="/chat") Chat
+                                a(href="/chat" style='color: white;') Chat
                             li
-                                a(href="/user/logout") Đăng xuất
+                                a(href="/user/logout" style='color: white;') Đăng xuất
                         else
                             li
-                                a(href="/user/login") Đăng nhập
+                                a(href="/user/login" style='color: white;') Đăng nhập
