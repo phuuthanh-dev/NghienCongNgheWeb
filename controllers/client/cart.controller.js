@@ -1,5 +1,6 @@
 const Cart = require("../../models/cart.model");
 const Product = require("../../models/product.model");
+const productHelper = require('../../helpers/product');
 
 // [GET] /cart
 module.exports.index = async (req, res) => {
@@ -14,13 +15,13 @@ module.exports.index = async (req, res) => {
             _id: item.product_id
         }).select("thumbnail title price discountPercentage stock slug");
 
-        infoProduct.priceNew = (infoProduct.price * (100 - infoProduct.discountPercentage) / 100).toFixed(0);
-
-        infoProduct.totalPrice = infoProduct.priceNew * item.quantity;
-
-        cart.totalPrice += infoProduct.totalPrice;
+        infoProduct.priceNew = productHelper.priceNewProduct(infoProduct);
 
         item.infoProduct = infoProduct;
+
+        item.totalPrice = item.quantity * infoProduct.priceNew;
+
+        cart.totalPrice += item.totalPrice;
     }
 
     res.render("client/pages/cart/index", {
@@ -70,3 +71,18 @@ module.exports.addPost = async (req, res) => {
 
     res.redirect("back");
 };
+
+// [GET] /cart/delete/:productId
+module.exports.deleteItem = async (req, res) => {
+    const productId = req.params.productId;
+    const cartId = req.cookies.cartId;
+
+    await Cart.updateOne({
+        _id: cartId
+    }, {
+        $pull: { products: { "product_id": productId } }
+    });
+
+    req.flash("success", "Đã xóa sản phẩm khỏi giỏ hàng!");
+    res.redirect("back");
+}   

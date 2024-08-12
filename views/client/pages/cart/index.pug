@@ -8,6 +8,11 @@ block main
   +alert-error(5000)
 
   .container.my-3
+    button(
+        class="btn btn-secondary mb-3"
+        button-go-back
+      ) Quay lại
+
     .row
       .col-12
         +box-head("Giỏ hàng")
@@ -51,17 +56,17 @@ block main
                       style="width: 60px"
                     )
                   td
-                    +formatPrice(item.infoProduct.totalPrice)
+                    +formatPrice(item.totalPrice)
                   td
                     a(
                       href=`/cart/delete/${item.product_id}`
                       class="btn btn-danger"
                     ) Xóa
           
-          h3(class="text-right") Tổng đơn hàng: 
+          h3(class="text-end") Tổng đơn hàng: 
             +formatPrice(cartDetail.totalPrice)
 
-          div(class="text-right mt-3")
+          div(class="text-end mt-3")
             a(href="/checkout" class="btn btn-success") THANH TOÁN
     else
       p Chưa có sản phẩm nào trong giỏ hàng.
