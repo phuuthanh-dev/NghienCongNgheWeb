@@ -88,7 +88,7 @@ module.exports.loginPost = async (req, res) => {
 // [GET] /user/logout
 module.exports.logout = async (req, res) => {
   res.clearCookie("tokenUser");
-  
+
   req.flash("success", "Đăng xuất thành công!");
   res.redirect("/");
 };
@@ -100,8 +100,6 @@ module.exports.profile = async (req, res) => {
     token: req.cookies.tokenUser,
     deleted: false
   }).select("-password");
-
-  console.log(infoUser);
 
   res.render("client/pages/user/profile", {
     pageTitle: "Thông tin tài khoản",
