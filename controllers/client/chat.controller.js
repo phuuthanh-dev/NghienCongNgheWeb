@@ -22,6 +22,14 @@ module.exports.index = async (req, res) => {
                 content: content
             })
         })
+
+        socket.on("CLIENT_TYPING", (status) => {
+            socket.broadcast.emit("SERVER_TYPING", {
+                userId: userId,
+                fullName: fullName,
+                status: status
+            });
+        })
     });
 
     // Lấy data trong database

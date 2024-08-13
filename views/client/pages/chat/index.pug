@@ -19,7 +19,7 @@ block main
                         if(chat.content)
                             .inner-content #{chat.content}
 
-                    div(class="inner-list-typing")
+                div(class="inner-list-typing")
             .inner-preview-images
                 div(class="custom-file-container" data-upload-id="upload-images")
             .inner-foot
@@ -35,11 +35,11 @@ block main
                     span(class="button-icon btn btn-light mx-2")
                         i(class="fa-regular fa-face-smile")
                     label(
-                        class="btn btn-light mr-2 mb-0"
+                        class="btn btn-light me-2 mb-0"
                         for="file-upload-with-preview-upload-images"
                     ) <i class="fa-regular fa-image"></i>
                     button
                         i.fa-solid.fa-paper-plane
   
-  div(class="tooltip" role="tooltip")
-    emoji-picker(class="light")
+    div(class="tooltip" role="tooltip")
+        emoji-picker(class="light")
