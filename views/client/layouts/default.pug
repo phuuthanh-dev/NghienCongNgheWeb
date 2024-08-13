@@ -7,6 +7,7 @@ html
         link(rel="icon" type="image/x-icon" href="/images/favicon.svg")
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css")
         link(rel="stylesheet", href="https://unpkg.com/file-upload-with-preview/dist/style.css")
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.css")
     body
 
         .wrapper
@@ -26,6 +27,8 @@ html
          //- SocketIO
         script(src="/socket.io/socket.io.js")
         script(src="/js/socket.js")
-        //- End SocketIO
+        //- https://github.com/fengyuanchen/viewerjs
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.js")
+        
         script(type='module' src='/js/chat.js')
         
