@@ -1,4 +1,16 @@
-import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
+import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js';
+
+// FileUploadWithPreview
+const chatBody = document.querySelector(".chat .inner-body");
+var upload;
+if (chatBody) {
+    chatBody.scrollTop = chatBody.scrollHeight;
+    upload = new FileUploadWithPreview.FileUploadWithPreview('upload-images', {
+        multiple: true,
+        maxFileCount: 6,
+    });
+}
+// End FileUploadWithPreview
 
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-form");
@@ -6,10 +18,16 @@ if (formSendData) {
     formSendData.addEventListener("submit", (event) => {
         event.preventDefault();
         const content = formSendData.content.value || "";
+        const images = upload.cachedFileArray || [];
 
-        if (content) {
-            socket.emit("CLIENT_SEND_MESSAGE", content);
+        if (content || images.length > 0) {
+            // Gửi content hoặc images lên server
+            socket.emit("CLIENT_SEND_MESSAGE", {
+                content: content,
+                images: images
+            });
             formSendData.content.value = "";
+            upload.resetPreviewPanel();
             socket.emit("CLIENT_TYPING", "hide");
         }
     })
@@ -31,20 +49,18 @@ socket.on("SERVER_SEND_MESSAGE", (data) => {
 
     div.innerHTML = `
         ${data.userId == myId ? "" : `<div class="inner-name">${data.fullName}</div>`}
-        <div class="inner-content">${data.content}</div>
+        ${data.content ? `<div class="inner-content">${data.content}</div>` : ""}
+        ${data.images.length > 0 ? `
+            <div class="inner-images">
+                ${data.images.map(image => `<img src="${image}" alt="Image">`).join("")}
+            </div>
+        ` : ""}
     `;
 
     body.insertBefore(div, boxTyping);
     body.scrollTop = body.scrollHeight;
 })
 // End SERVER_SEND_MESSAGE
-
-// Scroll to bottom
-const chatBody = document.querySelector(".chat .inner-body");
-if (chatBody) {
-    chatBody.scrollTop = chatBody.scrollHeight;
-}
-// End Scroll to bottom
 
 // Show typing
 var timeout;
@@ -59,7 +75,7 @@ const showTyping = () => {
 }
 // End Show typing
 
-// Emoji picker
+// Emoji picker | https://github.com/nolanlawson/emoji-picker-element
 // Show popup
 const buttonEmoji = document.querySelector('.chat .inner-form .button-icon');
 if (buttonEmoji) {
@@ -82,7 +98,7 @@ if (emojiPicker) {
         const length = input.value.length;
         input.setSelectionRange(length, length);
         input.focus();
-        
+
         showTyping();
     })
 

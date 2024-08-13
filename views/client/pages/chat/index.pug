@@ -18,6 +18,10 @@ block main
                             .inner-name #{chat.userFullName}
                         if(chat.content)
                             .inner-content #{chat.content}
+                        if(chat.images)
+                            .inner-images
+                                each image in chat.images
+                                    img(src=image)
 
                 div(class="inner-list-typing")
             .inner-preview-images
@@ -41,5 +45,6 @@ block main
                     button
                         i.fa-solid.fa-paper-plane
   
+    //- https://github.com/nolanlawson/emoji-picker-element
     div(class="tooltip" role="tooltip")
         emoji-picker(class="light")
