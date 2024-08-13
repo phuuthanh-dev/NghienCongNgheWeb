@@ -90,6 +90,12 @@ module.exports.logout = async (req, res) => {
   res.redirect("/");
 };
 
+// [GET] /user/password/forgot
+module.exports.forgotPassword = async (req, res) => {
+  res.render("client/pages/user/forgot-password", {
+    pageTitle: "Lấy lại mật khẩu",
+  });
+};
 
 // [GET] /user/profile
 module.exports.profile = async (req, res) => {
