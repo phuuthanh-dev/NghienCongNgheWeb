@@ -12,19 +12,20 @@ block main
       .col-12
         .chat(my-id=user.id)
             .inner-body
-                    .inner-outgoing
-                            .inner-content Hello e
-                    .inner-incoming
-                            .inner-name Em yêu
-                            .inner-content Hello a
+                each chat in chats
+                    div(class=(user.id == chat.user_id ? "inner-outgoing" : "inner-incoming"))
+                        if(user.id != chat.user_id)
+                            .inner-name #{chat.userFullName}
+                        if(chat.content)
+                            .inner-content #{chat.content}
 
                     div(class="inner-list-typing")
             .inner-preview-images
                 div(class="custom-file-container" data-upload-id="upload-images")
             .inner-foot
                 form(
-                class="inner-form"
-                action=""
+                    class="inner-form"
+                    action=""
                 )
                     input(
                         type="text"
