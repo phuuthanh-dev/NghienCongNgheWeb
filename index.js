@@ -11,6 +11,8 @@ const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const moment = require("moment");
+const http = require('http');
+const { Server } = require("socket.io");
 
 database.connect()
 
@@ -20,6 +22,12 @@ const port = process.env.PORT
 app.set("views", `${__dirname}/views`);
 app.set('view engine', 'pug')
 
+// SocketIO
+const server = http.createServer(app);
+const io = new Server(server);
+global._io = io;
+// End SocketIO
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -28,7 +36,7 @@ app.use(bodyParser.json())
 
 // Flash
 app.use(cookieParser('HKAHLALASGAD'));
-app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 
 /* New Route to the TinyMCE Node module */
