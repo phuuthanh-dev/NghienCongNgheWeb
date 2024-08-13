@@ -23,13 +23,10 @@ module.exports.registerPost = async (req, res) => {
     return;
   }
 
-  const userInfo = {
-    fullName: req.body.fullName,
-    email: req.body.email,
-    password: md5(req.body.password)
-  };
+  
+  req.body.password = md5(req.body.password)
 
-  const user = new User(userInfo);
+  const user = new User(req.body);
   await user.save();
 
   res.cookie("tokenUser", user.token);
