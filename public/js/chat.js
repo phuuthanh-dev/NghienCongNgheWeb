@@ -121,11 +121,12 @@ if (emojiPicker) {
 const elementListTyping = document.querySelector(".chat .inner-list-typing");
 if (elementListTyping) {
     socket.on("SERVER_TYPING", (data) => {
-        if (data.status == "show") {
+        if (data.status == "show" && data.userId != document.querySelector("[my-id]").getAttribute("my-id")) {
             const existTyping = elementListTyping.querySelector(`.box-typing[user-id="${data.userId}"]`);
             if (existTyping) {
                 return;
             }
+            
             const boxTyping = document.createElement("div");
             boxTyping.classList.add("box-typing");
             boxTyping.setAttribute("user-id", data.userId);
