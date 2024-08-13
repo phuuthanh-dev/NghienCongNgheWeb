@@ -29,7 +29,7 @@ module.exports.upload = (req, res, next) => {
             req.body[req.file.fieldname] = result.url;
             next();
         }
-
+        
         upload(req);
     } else {
         next();

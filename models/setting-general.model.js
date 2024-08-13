@@ -4,6 +4,7 @@ const settingGeneralSchema = new mongoose.Schema(
     {
         websiteName: String,
         logo: String,
+        favicon: String,
         phone: String,
         email: String,
         address: String,

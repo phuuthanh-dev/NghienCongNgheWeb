@@ -1,0 +1,44 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    
+    .row
+      .col-12
+        +box-head("Chat")
+
+    .row
+      .col-12
+        .chat(my-id=user.id)
+            .inner-body
+                    .inner-outgoing
+                            .inner-content Hello e
+                    .inner-incoming
+                            .inner-name Em yêu
+                            .inner-content Hello a
+
+                    div(class="inner-list-typing")
+            .inner-preview-images
+                div(class="custom-file-container" data-upload-id="upload-images")
+            .inner-foot
+                form(
+                class="inner-form"
+                action=""
+                )
+                    input(
+                        type="text"
+                        placeholder="Nhập nội dung..."
+                        name="content"
+                )
+                    span(class="button-icon btn btn-light mx-2")
+                        i(class="fa-regular fa-face-smile")
+                    label(
+                        class="btn btn-light mr-2 mb-0"
+                        for="file-upload-with-preview-upload-images"
+                    ) <i class="fa-regular fa-image"></i>
+                    button
+                        i.fa-solid.fa-paper-plane
+  
+  div(class="tooltip" role="tooltip")
+    emoji-picker(class="light")
