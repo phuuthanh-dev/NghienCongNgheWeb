@@ -31,5 +31,13 @@ socket.on("SERVER_SEND_MESSAGE", (data) => {
     `;
 
     body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
 })
 // End SERVER_SEND_MESSAGE
+
+// Scroll to bottom
+const chatBody = document.querySelector(".chat .inner-body");
+if (chatBody) {
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+// End Scroll to bottom
