@@ -3,6 +3,8 @@ const router = express.Router();
 
 const controller = require("../../controllers/client/friends.controller");
 
+router.get("/", controller.index);
+
 router.get("/suggestions", controller.suggestions);
 
 router.get("/requests", controller.requests);

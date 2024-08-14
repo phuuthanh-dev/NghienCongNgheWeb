@@ -74,5 +74,34 @@ module.exports = async (res) => {
                 $pull: { requestFriends: userIdA }
             });
         })
+
+        // Chấp nhận kết bạn
+        socket.on("CLIENT_ACCEPT_FRIEND", async (userIdB) => {
+            // Thêm {user_id, room_chat_id} của B vào friendsList của A
+            // Xóa id của B trong acceptFriends của A
+            await User.updateOne({
+                _id: userIdA
+            }, {
+                $push: {
+                    friendsList: {
+                        user_id: userIdB,
+                    }
+                },
+                $pull: { acceptFriends: userIdB }
+            });
+
+            // Thêm {user_id, room_chat_id} của A vào friendsList của B
+            // Xóa id của A trong requestFriends của B
+            await User.updateOne({
+                _id: userIdB
+            }, {
+                $push: {
+                    friendsList: {
+                        user_id: userIdA,
+                    }
+                },
+                $pull: { requestFriends: userIdA }
+            });
+        })
     });
 }
