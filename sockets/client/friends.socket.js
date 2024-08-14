@@ -37,8 +37,6 @@ module.exports = async (res) => {
 
         // Hủy gửi yêu cầu kết bạn
         socket.on('CLIENT_CANCEL_FRIREND', async (userIdB) => {
-            console.log(userIdB);
-
             // Xóa id của user A khỏi danh sách chấp nhận kết bạn của user B
             await User.updateOne({
                 _id: userIdB
@@ -57,6 +55,23 @@ module.exports = async (res) => {
             socket.broadcast.emit("SERVER_RETURN_CANCEL_FRIEND", {
                 userIdB: userIdB,
                 userIdA: userIdA
+            });
+        })
+
+        // Từ chối kết bạn
+        socket.on("CLIENT_REFUSE_FRIREND", async (userIdB) => {
+            // Xóa id của user B khỏi danh sách chấp nhận kết bạn của user A
+            await User.updateOne({
+                _id: userIdA
+            }, {
+                $pull: { acceptFriends: userIdB }
+            });
+
+            // Xóa id của user A khỏi danh sách yêu cầu của user B
+            await User.updateOne({
+                _id: userIdB
+            }, {
+                $pull: { requestFriends: userIdA }
             });
         })
     });
