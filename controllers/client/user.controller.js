@@ -228,7 +228,7 @@ module.exports.resetPasswordPost = async (req, res) => {
 };
 
 // [GET] /user/profile
-module.exports.profile = async (req, res) => {
+module.exports.myProfile = async (req, res) => {
   const infoUser = await User.findOne({
     token: req.cookies.tokenUser,
     deleted: false
@@ -258,7 +258,7 @@ module.exports.editProfile = async (req, res) => {
 // [PATCH] /user/profile/edit
 module.exports.editProfilePatch = async (req, res) => {
   const id = res.locals.user.id;
-  
+
   const emailExist = await User.findOne({
     _id: { $ne: id },
     email: req.body.email,
@@ -280,3 +280,17 @@ module.exports.editProfilePatch = async (req, res) => {
 
   res.redirect("back");
 }
+
+// [GET] /user/profile/:userId
+module.exports.profile = async (req, res) => {
+  const id = req.params.userId;
+  const infoUser = await User.findOne({
+    _id: id,
+    deleted: false
+  }).select("-password");
+
+  res.render("client/pages/user/profile", {
+    pageTitle: "Thông tin tài khoản",
+    infoUser: infoUser
+  });
+};

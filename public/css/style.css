@@ -640,3 +640,347 @@ footer {
 }
 
 /* End image-preview */
+.avatar.avatar--l {
+  width: 192px;
+  height: 192px;
+  font-size: 115px;
+}
+
+.avatar img:not(.cropImage) {
+  text-indent: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  display: block;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar {
+  border-radius: 4px;
+  vertical-align: top;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: 100%;
+}
+
+.memberHeader-avatar .avatar {
+  border-radius: 4px;
+}
+
+.avatar-border-profile-4:before,
+.avatar-border-profile-4:after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(45deg, #ff0d91, #f70087, #ff0d91, #fff, #e400ff, #fb00b9, #bd005e, #fff, #e3007e, #fff);
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: 9;
+  animation: steam 20s linear infinite;
+}
+
+.avatarWrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.memberHeader-avatar {
+  position: absolute;
+  padding: 15px;
+}
+
+.memberHeader-mainContent {
+  height: 140px;
+  position: relative;
+}
+
+@keyframes steam {
+  0% {
+    background-position: 0 0
+  }
+
+  50% {
+    background-position: 400% 0
+  }
+
+  100% {
+    background-position: 0 0
+  }
+}
+
+.avatar-border-profile-4 img {
+  z-index: 10;
+}
+
+.memberHeader--withBanner .memberHeader-main {
+  min-height: 250px;
+}
+
+.memberProfileBanner {
+  background-size: cover !important;
+  background-position-x: center !important;
+  background-repeat: no-repeat !important;
+}
+
+.memberHeader-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: #f3f4f5;
+  border-bottom: 0 solid #e0e0e0;
+}
+
+.memberHeader:before,
+.memberHeader:after {
+  content: " ";
+  display: table;
+}
+
+.memberHeader:after {
+  clear: both;
+}
+
+.memberHeader-content {
+  padding: 15px;
+  padding-left: 222px;
+}
+
+.memberHeader-actionTop {
+  float: right;
+}
+
+.memberHeader--withBanner .memberHeader-name {
+  color: white;
+}
+
+.memberHeader-name {
+  margin: 0;
+  margin-top: -.15em;
+  padding: 0;
+  font-weight: 400;
+  font-size: 2.2rem;
+  color: #141618;
+}
+
+.memberHeader--withBanner .username {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.username--style4 {
+  color: #ff0d91;
+  font-weight: bold;
+  text-shadow: 0px 1px 7px #bb00b5;
+  background: url(/images/effect-1.gif);
+}
+
+.memberHeader--withBanner .username {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+[dir=auto] {
+  text-align: left;
+}
+
+.memberHeader-banners,
+.memberHeader-blurb {
+  margin-top: 4px;
+}
+
+.userBanner.userBanner--mod {
+  color: #fff;
+  background: #ff0d91;
+  border-color: #ff50e9;
+  border-radius: 4px;
+  box-shadow: 0px 2px 7px #d900dd;
+  font-weight: bold;
+  margin: 5px 0px 5px 0px;
+}
+
+.userBanner {
+  font-size: 75%;
+  font-size: 11px;
+  font-weight: 400;
+  font-style: normal;
+  padding: 1px 10px;
+  padding: 1px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+  display: inline-block;
+}
+
+.userBanner.userBanner--green {
+  color: #fff;
+  background: #008000;
+  border-color: #004d00;
+  border-radius: 4px;
+}
+
+.userBanner {
+  font-size: 75%;
+  font-size: 11px;
+  font-weight: 400;
+  font-style: normal;
+  padding: 1px 10px;
+  padding: 1px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+  display: inline-block;
+}
+
+.memberHeader-stats {
+  font-size: 1.5rem;
+}
+
+.memberHeader-stats .pairJustifier {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.pairJustifier {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-right: -5px;
+  margin-bottom: -5px;
+}
+
+.pairJustifier .pairs.pairs--rows {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.pairs.pairs--rows {
+  display: inline-table;
+  margin-right: 10px;
+}
+
+.fauxBlockLink {
+  position: relative;
+}
+
+.pairs {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  line-height: 1.7;
+}
+
+.pairs.pairs--rows.pairs--rows--centered>dt,
+.pairs.pairs--rows.pairs--rows--centered>dd {
+  text-align: center;
+}
+
+.pairs.pairs--rows>dt {
+  display: table-row;
+  font-size: 55%;
+  font-weight: 500;
+}
+
+.pairs.pairs--rows>dd {
+  display: table-row;
+}
+
+.pairs>dt {
+  padding: 0;
+  margin: 0;
+  color: #76818d;
+}
+
+.pairs>dd {
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+}
+
+.memberHeader-separator {
+  margin: 15px 0;
+  border: none;
+  border-top: 1px solid #e0e0e0;
+}
+
+.pairs.pairs--inline {
+  display: inline;
+}
+
+.pairs {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  line-height: 1.7;
+}
+
+.pairs>dt {
+  padding: 0;
+  margin: 0;
+  color: #76818d;
+}
+
+.fauxBlockLink a,
+.fauxBlockLink .fauxBlockLink-link {
+  position: relative;
+  z-index: 2;
+}
+
+.pairs.pairs--inline>dt,
+.pairs.pairs--inline>dd {
+  font-size: 18px;
+  font-weight: 450;
+  display: inline;
+}
+
+.afEmail {
+  display: inline-block;
+}
+
+.uix_memberHeader__extra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  grid-gap: 10px;
+}
+
+.uix_memberHeader__extra .memberHeader-blurb {
+  margin: 0;
+}
+
+.block-container {
+  color: #141618;
+  background: #fff;
+  border-width: 0;
+  border-style: solid;
+  border-top-color: #e0e0e0;
+  border-right-color: #e0e0e0;
+  border-bottom-color: #e0e0e0;
+  border-left-color: #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.uix_memberHeader__extra .memberHeader-buttons {
+  margin-left: auto;
+}
+
+.buttonGroup {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.button.button--link, button.button a.button.button--link {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  text-transform: initial;
+}
+
+.button.button--link:hover, button.button a.button.button--link:hover, .button.button--link:focus, button.button a.button.button--link:focus {
+  text-decoration: none;
+  background: rgba(33, 150, 243, 0.2);
+}

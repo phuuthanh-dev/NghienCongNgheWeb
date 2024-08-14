@@ -12,24 +12,26 @@ block main
 
     .row(data-users-friend=user.id)
       each user in users
-        .col-6(user-id=user.id)
-          div(class="box-user")
-            div(class="inner-avatar")
-              img(
-                src=(user.avatar || 'https://robohash.org/hicveldicta.png')
-                alt=user.fullName
-              )
-            div(class="inner-info")
-              div(class="inner-name") #{user.fullName}
-              div(class="inner-buttons")
-                a(
-                  href=`/chat/${user.room_chat_id}`
-                  class="btn btn-sm btn-primary mr-1"
-                ) Nhắn tin
-              div(
-                class="inner-status"
-                status=user.statusOnline
-              ) <i class="fa-solid fa-circle"></i> #{user.statusOnline == 'online' ? 'Online' : 'Offline'}
+          .col-6(user-id=user.id)
+            div(class="box-user")
+              div(class="inner-avatar")
+                a(href=`/user/profile/${user.id}`)
+                  img(
+                    src=(user.avatar || 'https://robohash.org/hicveldicta.png')
+                    alt=user.fullName
+                  )
+              div(class="inner-info")
+                a(href=`/user/profile/${user.id}`)
+                  div(class="inner-name text-dark") #{user.fullName}
+                div(class="inner-buttons")
+                  a(
+                    href=`/chat/${user.room_chat_id}`
+                    class="btn btn-sm btn-primary mr-1"
+                  ) Nhắn tin
+                div(
+                  class="inner-status"
+                  status=user.statusOnline
+                ) <i class="fa-solid fa-circle"></i> #{user.statusOnline == 'online' ? 'Online' : 'Offline'}
               
   block scripts
     script(type='module' src='/js/friend.js')

@@ -21,7 +21,7 @@ block main
             div(class="box-user add")
               div(class="inner-avatar")
                 img(
-                  src="https://robohash.org/hicveldicta.png"
+                  src=(user.avatar || 'https://robohash.org/hicveldicta.png')
                   alt=user.fullName
                 )
               div(class="inner-info")

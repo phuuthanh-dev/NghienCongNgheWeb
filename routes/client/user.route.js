@@ -31,9 +31,11 @@ router.get("/password/reset", controller.resetPassword);
 
 router.post("/password/reset", validate.resetPasswordPost, controller.resetPasswordPost);
 
-router.get("/profile", authMiddleware.requireAuth, controller.profile);
+router.get("/profile", authMiddleware.requireAuth, controller.myProfile);
 
 router.get("/profile/edit", authMiddleware.requireAuth, controller.editProfile);
+
+router.get("/profile/:userId", authMiddleware.requireAuth, controller.profile);
 
 router.patch("/profile/edit", upload.single('avatar'), uploadCloud.upload, authMiddleware.requireAuth, controller.editProfilePatch);
 
