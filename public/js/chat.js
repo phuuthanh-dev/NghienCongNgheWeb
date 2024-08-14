@@ -42,15 +42,19 @@ socket.on("SERVER_SEND_MESSAGE", (data) => {
     const div = document.createElement("div");
 
     if (data.userId == myId) {
-        div.classList.add("inner-outgoing");
+        div.classList.add("inner-outgoing mt-2");
     } else {
-        div.classList.add("inner-incoming");
+        div.classList.add("inner-incoming mt-2");
     }
 
     div.innerHTML = `
-        ${data.userId == myId ? "" : `<div class="inner-name">${data.fullName}</div>`}
-        ${data.content ? `<div class="inner-content">${data.content}</div>` : ""}
-        ${data.images.length > 0 ? `
+        ${data.userId == myId || data.typeRoom !== "group" ? "" : `<div class="inner-name">${data.fullName}</div>`}
+        ${data.content ? `
+            <div class="inner-img-content">
+                ${data.userId != myId ? `<img src="https://robohash.org/hicveldicta.png" style="width: 28px; height: 28px; border-radius: 50%;">` : ""}
+                <div class="inner-content">${data.content}</div>
+            </div>` : ""}
+        ${data.images && data.images.length > 0 ? `
             <div class="inner-images">
                 ${data.images.map(image => `<img src="${image}" alt="Image">`).join("")}
             </div>
@@ -75,7 +79,7 @@ socket.on("SERVER_SEND_MESSAGE", (data) => {
 var timeout;
 const showTyping = () => {
     socket.emit("CLIENT_TYPING", "show");
-
+    
     clearTimeout(timeout);
 
     timeout = setTimeout(() => {
@@ -87,6 +91,7 @@ const showTyping = () => {
 // Emoji picker | https://github.com/nolanlawson/emoji-picker-element
 // Show popup
 const buttonEmoji = document.querySelector('.chat .inner-form .button-icon');
+
 if (buttonEmoji) {
     const tooltip = document.querySelector('.tooltip');
     Popper.createPopper(buttonEmoji, tooltip)
@@ -99,7 +104,6 @@ if (buttonEmoji) {
 const emojiPicker = document.querySelector('emoji-picker');
 if (emojiPicker) {
     const input = document.querySelector('.chat .inner-form input[name="content"]');
-
     emojiPicker.addEventListener('emoji-click', (event) => {
         const icon = event.detail.unicode;
         input.value += icon;
@@ -131,11 +135,13 @@ if (elementListTyping) {
             boxTyping.classList.add("box-typing");
             boxTyping.setAttribute("user-id", data.userId);
             boxTyping.innerHTML = `
-                <div class="inner-name">${data.fullName}</div>
-                <div class="inner-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <div class="inner-img-content">
+                    <img src="https://robohash.org/hicveldicta.png" style="width: 28px; height: 28px; border-radius: 50%;">
+                    <div class="inner-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
             `;
             elementListTyping.appendChild(boxTyping);

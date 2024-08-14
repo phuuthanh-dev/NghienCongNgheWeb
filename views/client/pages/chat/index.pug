@@ -8,18 +8,23 @@ block main
     
         .row.mt-4
             .col-12
-                +box-head("Chat")
+                +box-head(title)
+                div(style="margin-top: -30px" class="inner-status mb-4" status=statusOnline)
+                    <i class="fa-solid fa-circle"></i> #{statusOnline == 'online' ? 'Đang hoạt động' : 'Không hoạt động'}
 
         .row
             .col-12
                 .chat(my-id=user.id)
                     .inner-body
                         each chat in chats
-                            div(class=(user.id == chat.user_id ? "inner-outgoing" : "inner-incoming"))
-                                if(user.id != chat.user_id)
+                            div(class=(user.id == chat.user_id ? "inner-outgoing mt-2" : "inner-incoming mt-2"))
+                                if(user.id != chat.user_id && typeRoom == "group")
                                     .inner-name #{chat.userFullName}
                                 if(chat.content)
-                                    .inner-content #{chat.content}
+                                    .div.inner-img-content
+                                        if(user.id != chat.user_id)
+                                            img(src='https://robohash.org/hicveldicta.png', style='width: 28px; height: 28px; border-radius: 50%;')
+                                        .inner-content #{chat.content}
                                 if(chat.images)
                                     .inner-images
                                         each image in chat.images

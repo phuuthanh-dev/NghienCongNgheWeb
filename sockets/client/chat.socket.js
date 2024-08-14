@@ -1,4 +1,5 @@
 const Chat = require("../../models/chat.model");
+const RoomChat = require("../../models/room-chat.model");
 
 const { uploadToCloudinary } = require("../../helpers/uploadToCloudinary");
 
@@ -27,15 +28,21 @@ module.exports = async (req, res) => {
 
             await chat.save();
 
+            const roomChat = await RoomChat.findOne({
+                _id: roomChatId,
+                deleted: false
+            });
+
             _io.to(roomChatId).emit("SERVER_SEND_MESSAGE", {
                 userId: userId,
                 fullName: fullName,
                 content: data.content,
-                images: images
+                images: images,
+                typeRoom: roomChat.typeRoom
             })
         })
 
-        socket.on("CLIENT_TYPING", (status) => {
+        socket.on("CLIENT_TYPING", async (status) => {
             socket.broadcast.to(roomChatId).emit("SERVER_TYPING", {
                 userId: userId,
                 fullName: fullName,

@@ -310,6 +310,7 @@ footer {
 
 .chat .inner-body .inner-name {
   font-weight: 600;
+  margin: 0 0 0px 35px;
 }
 
 .chat .inner-body .inner-content {
@@ -419,14 +420,14 @@ footer {
 
 .box-typing .inner-dots {
   position: relative;
-  height: 20px;
+  /* height: 20px; */
   width: 50px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: #efefef;
   border-radius: 45px;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .box-typing .inner-dots span {
@@ -550,12 +551,12 @@ footer {
   right: 10px;
 }
 
-.box-user .inner-status[status="online"] {
-  color: #00d800;
+.inner-status[status="online"] {
+  color: #31a24c;
   opacity: 1;
 }
 
-.box-user .inner-status[status="offline"] {
+.inner-status[status="offline"] {
   opacity: 1;
 }
 
@@ -615,4 +616,9 @@ footer {
   padding: 2px 8px;
   font-size: 12px;
   border: 2px solid white;
+}
+
+.inner-img-content {
+  display: flex;
+  flex-wrap: wrap;
 }
