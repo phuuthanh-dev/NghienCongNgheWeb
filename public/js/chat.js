@@ -42,9 +42,9 @@ socket.on("SERVER_SEND_MESSAGE", (data) => {
     const div = document.createElement("div");
 
     if (data.userId == myId) {
-        div.classList.add("inner-outgoing mt-2");
+        div.classList.add("inner-outgoing", "mt-2");
     } else {
-        div.classList.add("inner-incoming mt-2");
+        div.classList.add("inner-incoming", "mt-2");
     }
 
     div.innerHTML = `
@@ -79,7 +79,7 @@ socket.on("SERVER_SEND_MESSAGE", (data) => {
 var timeout;
 const showTyping = () => {
     socket.emit("CLIENT_TYPING", "show");
-    
+
     clearTimeout(timeout);
 
     timeout = setTimeout(() => {
