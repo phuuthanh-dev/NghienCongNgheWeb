@@ -126,18 +126,18 @@ if (elementListTyping) {
             if (existTyping) {
                 return;
             }
-            
+
             const boxTyping = document.createElement("div");
             boxTyping.classList.add("box-typing");
             boxTyping.setAttribute("user-id", data.userId);
             boxTyping.innerHTML = `
-            <div class="inner-name">${data.fullName}</div>
-            <div class="inner-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        `;
+                <div class="inner-name">${data.fullName}</div>
+                <div class="inner-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
             elementListTyping.appendChild(boxTyping);
             chatBody.scrollTop = chatBody.scrollHeight;
         } else {
