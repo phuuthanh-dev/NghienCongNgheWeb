@@ -23,8 +23,8 @@ header.header(style='background: rgb(51, 51, 51);')
                         button(
                             type="submit"
                             class="btn btn-primary"
-                            style="width: 115px"
-                        ) Tìm kiếm
+                        ) 
+                            i.fa-solid.fa-magnifying-glass
             .col-4
                 .inner-menu
                     ul
@@ -36,6 +36,8 @@ header.header(style='background: rgb(51, 51, 51);')
                         li
                             a(href="/cart" style='color: white;') Giỏ hàng (#{miniCart ? miniCart.products.length : 0})
                         if (user)
+                            li
+                                a(href="/rooms-chat" style='color: white;') Phòng chat
                             li
                                 a(href="/friends" style='color: white;') Bạn bè
                             li

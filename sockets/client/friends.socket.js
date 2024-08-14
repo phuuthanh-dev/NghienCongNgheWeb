@@ -3,7 +3,7 @@ const RoomChat = require("../../models/room-chat.model");
 
 module.exports = async (res) => {
     const userIdA = res.locals.user.id;
-
+    
     _io.once('connection', (socket) => {
         // Gửi yêu cầu kết bạn
         socket.on("CLIENT_ADD_FRIEND", async (userIdB) => {
