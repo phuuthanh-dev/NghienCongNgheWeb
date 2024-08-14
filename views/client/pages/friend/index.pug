@@ -29,4 +29,6 @@ block main
               div(
                 class="inner-status"
                 status=user.statusOnline
-              ) <i class="fa-solid fa-circle"></i>
+              ) <i class="fa-solid fa-circle"></i> #{user.statusOnline == 'online' ? 'Online' : 'Offline'}
+  block scripts
+    script(type='module' src='/js/friend.js')

@@ -163,3 +163,20 @@ socket.on("SERVER_RETURN_CANCEL_REQUEST", (data) => {
     }
 });
 // End SERVER_RETURN_CANCEL_REQUEST
+
+// SERVER_RETURN_STATUS_ONLINE
+socket.on("SERVER_RETURN_STATUS_ONLINE", (data) => {
+    const dataUsersFriend = document.querySelector("[data-users-friend]");
+    
+    if (dataUsersFriend) {
+        const boxUser = dataUsersFriend.querySelector(`[user-id="${data.userId}"]`);
+        if (boxUser) {
+            const boxInnerStatus = boxUser.querySelector(".inner-status");
+            boxInnerStatus.setAttribute("status", data.statusOnline);
+            boxInnerStatus.innerHTML = `
+                <i class="fa-solid fa-circle"></i> ${data.statusOnline == 'online' ? 'Online' : 'Offline'}
+            `
+        }
+    }
+});
+// End SERVER_RETURN_STATUS_ONLINE

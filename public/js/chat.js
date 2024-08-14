@@ -157,3 +157,12 @@ if (chatBody) {
         navbar: false,
     });
 }
+
+// SERVER_RETURN_LENGTH_ACCEPT_FRIEND
+socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", (data) => {
+    const badgeUsersAccept = document.querySelector(`[badge-users-accept="${data.userId}"]`);
+    if (badgeUsersAccept) {
+        badgeUsersAccept.innerHTML = data.lengthAcceptFriends;
+    }
+});
+// End SERVER_RETURN_LENGTH_ACCEPT_FRIEND

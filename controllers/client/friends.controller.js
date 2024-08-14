@@ -71,10 +71,10 @@ module.exports.accepts = async (req, res) => {
 
 // [GET] /friends
 module.exports.index = async (req, res) => {
-  const friendsList = res.locals.user.friendsList.map(user => user.user_id);
+  const friendsListId = res.locals.user.friendsList.map(user => user.user_id);
 
   const users = await User.find({
-    _id: { $in: friendsList },
+    _id: { $in: friendsListId },
     status: "active",
     deleted: false,
   }).select("avatar fullName statusOnline");

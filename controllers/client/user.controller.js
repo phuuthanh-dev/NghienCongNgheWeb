@@ -27,7 +27,6 @@ module.exports.registerPost = async (req, res) => {
     return;
   }
 
-
   req.body.password = md5(req.body.password)
 
   const user = new User(req.body);
@@ -82,12 +81,31 @@ module.exports.loginPost = async (req, res) => {
 
   res.cookie("tokenUser", user.token);
 
+  await User.updateOne({ _id: user.id }, { statusOnline: "online" });
+
+  _io.once('connection', (socket) => {
+    socket.broadcast.emit("SERVER_RETURN_STATUS_ONLINE", {
+      userId: user.id,
+      statusOnline: "online"
+    })
+  })
+
   req.flash("success", "Đăng nhập thành công!");
   res.redirect("/");
 };
 
 // [GET] /user/logout
 module.exports.logout = async (req, res) => {
+  const tokenUser = req.cookies.tokenUser;
+
+  await User.updateOne({ token: tokenUser }, { statusOnline: "offline" });
+
+  _io.once('connection', (socket) => {
+    socket.broadcast.emit("SERVER_RETURN_STATUS_ONLINE", {
+      userId: res.locals.user.id,
+      statusOnline: "offline"
+    })
+  })
   res.clearCookie("tokenUser");
 
   req.flash("success", "Đăng xuất thành công!");
