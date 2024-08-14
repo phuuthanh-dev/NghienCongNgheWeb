@@ -239,3 +239,44 @@ module.exports.profile = async (req, res) => {
     infoUser: infoUser
   });
 };
+
+// [GET] /user/profile/edit
+module.exports.editProfile = async (req, res) => {
+  const user = await User
+    .findOne({
+      token: req.cookies.tokenUser,
+      deleted: false
+    })
+    .select("-password");
+
+  res.render("client/pages/user/edit-profile", {
+    pageTitle: "Chỉnh sửa thông tin tài khoản",
+    user: user
+  });
+}
+
+// [PATCH] /user/profile/edit
+module.exports.editProfilePatch = async (req, res) => {
+  const id = res.locals.user.id;
+  
+  const emailExist = await User.findOne({
+    _id: { $ne: id },
+    email: req.body.email,
+    deleted: false
+  });
+
+  if (emailExist) {
+    req.flash("error", `Email ${emailExist.email} đã tồn tại`);
+    res.redirect("back");
+    return;
+  }
+
+  await User.updateOne({
+    _id: id,
+    deleted: false
+  }, req.body);
+
+  req.flash("success", "Chỉnh sửa thông tin tài khoản thành công!");
+
+  res.redirect("back");
+}

@@ -19,9 +19,10 @@ module.exports.index = async (req, res) => {
     for (const chat of chats) {
         const infoUser = await User.findOne({
             _id: chat.user_id
-        }).select("fullName");
+        }).select("fullName avatar");
 
         chat.userFullName = infoUser.fullName;
+        chat.userAvatar = infoUser.avatar;
     }
     // Hết Lấy data trong database
 
@@ -41,7 +42,7 @@ module.exports.index = async (req, res) => {
         pageTitle: "Chat",
         title,
         chats,
-        typeRoom: roomChat.typeRoom,
+        roomChat,
         statusOnline
     });
 };

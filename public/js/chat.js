@@ -2,6 +2,8 @@ import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm
 
 // FileUploadWithPreview
 const chatBody = document.querySelector(".chat .inner-body");
+const roomChatId = document.querySelector("[room-id]").getAttribute("room-id");
+const userId = document.querySelector("[my-id]").getAttribute("my-id");
 var upload;
 if (chatBody) {
     chatBody.scrollTop = chatBody.scrollHeight;
@@ -24,7 +26,8 @@ if (formSendData) {
             // Gửi content hoặc images lên server
             socket.emit("CLIENT_SEND_MESSAGE", {
                 content: content,
-                images: images
+                images: images,
+                userId: userId
             });
             formSendData.content.value = "";
             upload.resetPreviewPanel();
@@ -77,13 +80,20 @@ socket.on("SERVER_SEND_MESSAGE", (data) => {
 
 // Show typing
 var timeout;
+const inputChat = document.querySelector(`.chat .inner-form input[name="content"]`);
+if (inputChat) {
+    inputChat.addEventListener("keyup", () => {
+        showTyping();
+    })
+}
+
 const showTyping = () => {
-    socket.emit("CLIENT_TYPING", "show");
+    socket.emit("CLIENT_TYPING", { status: "show", roomChatId });
 
     clearTimeout(timeout);
 
     timeout = setTimeout(() => {
-        socket.emit("CLIENT_TYPING", "hide");
+        socket.emit("CLIENT_TYPING", { status: "hide", roomChatId });
     }, 3000)
 }
 // End Show typing
@@ -103,19 +113,14 @@ if (buttonEmoji) {
 // Insert emoji into input
 const emojiPicker = document.querySelector('emoji-picker');
 if (emojiPicker) {
-    const input = document.querySelector('.chat .inner-form input[name="content"]');
     emojiPicker.addEventListener('emoji-click', (event) => {
         const icon = event.detail.unicode;
-        input.value += icon;
+        inputChat.value += icon;
 
-        const length = input.value.length;
-        input.setSelectionRange(length, length);
-        input.focus();
+        const length = inputChat.value.length;
+        inputChat.setSelectionRange(length, length);
+        inputChat.focus();
 
-        showTyping();
-    })
-
-    input.addEventListener('keyup', () => {
         showTyping();
     })
 }
@@ -125,7 +130,13 @@ if (emojiPicker) {
 const elementListTyping = document.querySelector(".chat .inner-list-typing");
 if (elementListTyping) {
     socket.on("SERVER_TYPING", (data) => {
-        if (data.status == "show" && data.userId != document.querySelector("[my-id]").getAttribute("my-id")) {
+        if (data.roomChatId != roomChatId) {
+            return;
+        }
+        if (data.status == "show") {
+            if (data.userId == document.querySelector("[my-id]").getAttribute("my-id")) {
+                return;
+            }
             const existTyping = elementListTyping.querySelector(`.box-typing[user-id="${data.userId}"]`);
             if (existTyping) {
                 return;

@@ -1,0 +1,35 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert-success(5000)
+    +alert-error(5000)
+
+    .container.my-5
+        .row.justify-content-center
+            h1(class="mb-4") Chỉnh sửa thông tin cá nhân
+
+            form(
+                method="POST" 
+                action=`/user/profile/edit?_method=PATCH` 
+                enctype="multipart/form-data"
+            )
+                .form-group
+                    label(for="fullName") Họ tên
+                    input#fullName.form-control.mb-3(type="text" name="fullName" value=user.fullName)
+                
+                .form-group
+                    label(for="email") Email
+                    input#email.form-control.mb-3(type="email" name="email" value=user.email)
+                
+                .form-group
+                    label(for="phone") Số điện thoại
+                    input#phone.form-control.mb-3(type="text" name="phone" value=user.phone)
+                
+                .form-group(upload-image)
+                    label(for="avatar") Ảnh đại diện
+                    input#avatar.form-control.mb-3(type="file" name="avatar" upload-image-input accept="image/*")
+                    img(src=(user.avatar ? user.avatar : "")  width="150px" class="mb-3" upload-image-preview class="image-preview")
+                
+                .form-group
+                    button.btn.btn-primary(type="submit") Cập nhật

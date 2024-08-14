@@ -14,16 +14,16 @@ block main
 
         .row
             .col-12
-                .chat(my-id=user.id)
+                .chat(my-id=user.id room-id=roomChat._id)
                     .inner-body
                         each chat in chats
                             div(class=(user.id == chat.user_id ? "inner-outgoing mt-2" : "inner-incoming mt-2"))
-                                if(user.id != chat.user_id && typeRoom == "group")
-                                    .inner-name #{chat.userFullName}
+                                if(user.id != chat.user_id && roomChat.typeRoom == "group")
+                                    .inner-name(style='margin-right: 35px') #{chat.userFullName}
                                 if(chat.content)
                                     .div.inner-img-content
                                         if(user.id != chat.user_id)
-                                            img(src='https://robohash.org/hicveldicta.png', style='width: 28px; height: 28px; border-radius: 50%;')
+                                            img.me-2(src=(chat.userAvatar || 'https://robohash.org/hicveldicta.png'), style='width: 28px; height: 28px; border-radius: 50%;')
                                         .inner-content #{chat.content}
                                 if(chat.images)
                                     .inner-images
@@ -42,6 +42,7 @@ block main
                                 type="text"
                                 placeholder="Nhập nội dung..."
                                 name="content"
+                                data-user-id=user-id
                             )
                             span(class="button-icon btn btn-light mx-2")
                                 i.fa-regular.fa-face-smile

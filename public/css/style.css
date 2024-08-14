@@ -309,8 +309,9 @@ footer {
 }
 
 .chat .inner-body .inner-name {
-  font-weight: 600;
-  margin: 0 0 0px 35px;
+  font-size: 12px;
+  font-weight: 550;
+  margin: 0 0 2px 42px;
 }
 
 .chat .inner-body .inner-content {
@@ -622,3 +623,20 @@ footer {
   display: flex;
   flex-wrap: wrap;
 }
+
+/* image-preview */
+.image-preview {
+  display: block;
+  width: 150px;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 15px;
+}
+
+.image-preview[src=""] {
+  display: none;
+}
+
+/* End image-preview */

@@ -12,6 +12,9 @@ module.exports = async (req, res) => {
         socket.join(roomChatId);
 
         socket.on("CLIENT_SEND_MESSAGE", async (data) => {
+            if (data.userId != userId) {
+                return;
+            }
             let images = [];
 
             for (const imageBuffer of data.images) {
@@ -42,11 +45,12 @@ module.exports = async (req, res) => {
             })
         })
 
-        socket.on("CLIENT_TYPING", async (status) => {
-            socket.broadcast.to(roomChatId).emit("SERVER_TYPING", {
+        socket.on("CLIENT_TYPING", (data) => {
+            socket.to(roomChatId).emit("SERVER_TYPING", {
                 userId: userId,
                 fullName: fullName,
-                status: status
+                roomChatId: roomChatId,
+                status: data.status
             });
         })
     });
