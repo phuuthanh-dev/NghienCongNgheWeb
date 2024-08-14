@@ -28,3 +28,43 @@ module.exports.suggestions = async (req, res) => {
     users: users
   });
 };
+
+// [GET] /friends/requests
+module.exports.requests = async (req, res) => {
+  // SocketIO
+  await friendsSocket(res);
+  // End SocketIO
+
+  const requestFriends = res.locals.user.requestFriends;
+
+  const users = await User.find({
+    _id: { $in: requestFriends },
+    status: "active",
+    deleted: false,
+  }).select("avatar fullName");
+
+  res.render("client/pages/friend/request", {
+    pageTitle: "Lời mời đã gửi",
+    users: users
+  });
+};
+
+// [GET] /friends/accepts
+module.exports.accepts = async (req, res) => {
+  // SocketIO
+  await friendsSocket(res);
+  // End SocketIO
+
+  const acceptFriends = res.locals.user.acceptFriends;
+
+  const users = await User.find({
+    _id: { $in: acceptFriends },
+    status: "active",
+    deleted: false,
+  }).select("avatar fullName");
+
+  res.render("client/pages/friend/accept", {
+    pageTitle: "Lời mời đã nhận",
+    users: users
+  });
+};
