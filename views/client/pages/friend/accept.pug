@@ -11,8 +11,8 @@ block main
         +box-head("Lời mời đã nhận")
 
     if (users.length === 0)
-      .row
-        .col-12
+      .row(data-users-accept=user.id)
+        .col-12(text-no-users)
           p Không có lời mời nào
     else
       .row(data-users-accept=user.id)
