@@ -603,6 +603,12 @@ footer {
   display: block;
 }
 
+
+[badge-noti-group] {
+  width: 24px;
+  height: 24px;
+}
+
 .position-relative {
   position: relative;
 }

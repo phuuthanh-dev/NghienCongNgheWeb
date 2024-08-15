@@ -271,21 +271,28 @@ module.exports.editProfilePatch = async (req, res) => {
 
 // [GET] /user/:slug
 module.exports.profile = async (req, res) => {
-  const slug = req.params.slug;
-  const infoUser = await User.findOne({
-    slug: slug,
-    deleted: false
-  }).select("-password");
+  try {
+    const slug = req.params.slug;
+    const infoUser = await User.findOne({
+      slug: slug,
+      deleted: false
+    }).select("-password");
 
-  const friendsListId = infoUser.friendsList.map(friend => friend.user_id);
-  infoUser.friendsListId = friendsListId;
-  const friends = await User.find({
-    _id: { $in: friendsListId } 
-  }).select('fullName avatar slug');
+    const friendsListId = infoUser.friendsList.map(friend => friend.user_id);
+    infoUser.friendsListId = friendsListId;
+    const friends = await User.find({
+      _id: { $in: friendsListId }
+    }).select('fullName avatar slug');
 
-  res.render("client/pages/user/profile", {
-    pageTitle: "Thông tin tài khoản",
-    infoUser: infoUser,
-    friends: friends
-  });
+    res.render("client/pages/user/profile", {
+      pageTitle: "Thông tin tài khoản",
+      infoUser: infoUser,
+      friends: friends
+    });
+  } catch (err) {
+    console.log(err)
+    res.render("client/pages/errors/404", {
+      pageTitle: "404 Not Found"
+    });
+  }
 };

@@ -627,8 +627,3 @@ button.button a.button.button--link:focus {
     background: rgba(33, 150, 243, 0.2);
     border-color: #e0e0e0 !important;
 }
-
-[badge-noti-group] {
-    width: 24px;
-    height: 24px;
-}
