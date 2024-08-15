@@ -1,6 +1,7 @@
 // Listen for the SERVER_UNSEEN_CHATS event
 const userId = document.querySelector("[my-id]").getAttribute("my-id");
 socket.on("SERVER_UNSEEN_CHATS", (data) => {
+    
     const roomChatId = data.roomChatId;
     const numberUnseenChats = data.numberUnseenChats;
     //User id of the user who has unseen chats

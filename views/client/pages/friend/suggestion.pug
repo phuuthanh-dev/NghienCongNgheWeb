@@ -10,7 +10,7 @@ block main
       .col-12
         +box-head("Danh sách gợi ý")
 
-    .row(data-users-suggestion=user.id)
+    .row(data-users-suggestion=user.id my-id=user.id)
       each user in users
         .col-6(user-id=user.id)
           div(class="box-user")

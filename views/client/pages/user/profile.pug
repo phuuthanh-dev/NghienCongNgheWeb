@@ -16,7 +16,7 @@ block main
                     source(src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1196590/cab07b55db2fe6f16046b007bf0043f7f8843369.webm" type="video/webm")
                     source(src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1196590/b3c4da6e415e1f01916dd5c46bc9d50fd1aa88f2.mp4" type="video/mp4")
     .container
-        .row
+        .row(my-id=infoUser.id)
             .col-12
                 .block
                     .block-container
@@ -115,10 +115,11 @@ block main
                                                 a(href="/user/profile/edit" class="btn btn-primary ms-3") Chỉnh sửa thông tin
                                                 a(href="/user/logout" class="btn btn-dark ms-3") Đăng xuất
 
-                .block-tabHeader.block-tabHeader--memberTabs.tabs.hScroller
+                .block-tabHeader.block-tabHeader--memberTabs.tabs.hScroller.bg-white
                     span.hScroller-scroll.is-calculated
                         a.tabs-tab.rippleButton.is-active(aria-selected='true' role='tab' id='about') Giới thiệu
                         a.tabs-tab.rippleButton(aria-selected='false' role='tab' id='friend') Bạn bè
+                        a.tabs-tab.rippleButton(aria-selected='false' role='tab' id='post') Các bài đăng
                 .tabPanes.js-memberTabPanes
                     li.is-active(data-href='/members/jimmynguyen.9/about' role='tabpanel' aria-labelledby='about' aria-expanded='true')
                         .block
@@ -145,6 +146,9 @@ block main
                                             li
                                                 a.avatar.avatar--s(href="#")
                                                     img.avatar-u23-s(src="https://images.playground.com/fc5ed3a1ea97494f9974f44457ecee0c.jpeg" alt="JimmyNguyen" width="48" height="48")
+                                    .block-row.block-row--separated
+                                        h4.block-textHeader About Me
+                                        p #{infoUser.aboutMe}
                     li(data-href='/members/jimmynguyen.9/friends' role='tabpanel' aria-labelledby='friend' aria-expanded='false')
                         .block
                             .block-container
@@ -159,4 +163,22 @@ block main
                                                             img.avatar-u23-s(src=friend.avatar alt=friend.fullName width="80" height="80" style="border-radius: 8px;")
                                                         a(href=`/user/${friend.slug}`) 
                                                             span.text-dark.fw-bold #{friend.fullName}
+                                                        button.btn(style='margin-left: auto;') 
+                                                            i.fa-solid.fa-eye
+                    li(data-href='/members/jimmynguyen.9/friends' role='tabpanel' aria-labelledby='post' aria-expanded='false')
+                        .block
+                            .block-container
+                                .block-body
+                                    .block-row.block-row--separated
+                                        h4.block-textHeader.mb-4 Bạn bè
+                                        .row
+                                            each friend in friends
+                                                .col-md-6.mb-4
+                                                    .d-flex.align-items-center(style='border-radius: 8px; padding: 16px; border: 1px solid #e9e9e9;')
+                                                        a(style='margin-right: 16px; flex-shrink: 0;' href=`/user/${friend.slug}`)
+                                                            img.avatar-u23-s(src=friend.avatar alt=friend.fullName width="80" height="80" style="border-radius: 8px;")
+                                                        a(href=`/user/${friend.slug}`) 
+                                                            span.text-dark.fw-bold #{friend.fullName}
+                                                        button.btn(style='margin-left: auto;') 
+                                                            i.fa-solid.fa-eye
                 
