@@ -15,12 +15,14 @@ block main
         .col-6(user-id=user.id)
           div(class="box-user")
             div(class="inner-avatar")
-              img(
-                src=(user.avatar || 'https://robohash.org/hicveldicta.png')
-                alt=user.fullName
-              )
+              a(href=`/user/${user.slug}`)
+                img(
+                  src=(user.avatar || 'https://robohash.org/hicveldicta.png')
+                  alt=user.fullName
+                )
             div(class="inner-info")
-              div(class="inner-name") #{user.fullName}
+              a(href=`/user/${user.slug}`)
+                div(class="inner-name text-dark") #{user.fullName}
               div(class="inner-buttons")
                 button(
                   class="btn btn-sm btn-primary mr-1"

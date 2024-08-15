@@ -1,6 +1,9 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 
+block head
+  link(rel='stylesheet', href='/css/profile.css')
+
 block main
   .container
     .row
@@ -12,14 +15,27 @@ block main
                         .memberHeader-mainContent
                             span.memberHeader-avatar
                                 span.avatarWrapper
-                                    .avatar-border-profile-4
-                                        a.avatar.avatar--l(href='#' data-user-id='9')
-                                            img.avatar-u9-l(src=(infoUser.avatar || 'https://robohash.org/hicveldicta.png') alt=infoUser.fullName width='192' height='192')
+                                    if (infoUser.banners.includes('admin'))
+                                        .avatar-border-profile-2
+                                            a.avatar.avatar--l(href='#' data-user-id='9')
+                                                img.avatar-u9-l(src=(infoUser.avatar || 'https://robohash.org/hicveldicta.png') alt=infoUser.fullName width='192' height='192')
+                                    else if (infoUser.banners.includes('mod'))
+                                        .avatar-border-profile-3
+                                            a.avatar.avatar--l(href='#' data-user-id='9')
+                                                img.avatar-u9-l(src=(infoUser.avatar || 'https://robohash.org/hicveldicta.png') alt=infoUser.fullName width='192' height='192')
+                                    else 
+                                        .avatar-border-profile-4
+                                            a.avatar.avatar--l(href='#' data-user-id='9')
+                                                img.avatar-u9-l(src=(infoUser.avatar || 'https://robohash.org/hicveldicta.png') alt=infoUser.fullName width='192' height='192')
+                                    
                             .memberHeader-content.memberHeader-content--info
                                 h1.memberHeader-name 
                                     span.memberHeader-nameWrapper
                                         span.username(dir="auto")
-                                            span.username--style4.username--moderator #{infoUser.fullName}
+                                            if (infoUser.banners.includes('admin'))
+                                                span.username--style3.username--admin #{infoUser.fullName}
+                                            else
+                                                span.username--style4.username--moderator #{infoUser.fullName}
                                 .memberHeader-banners
                                     if (infoUser.banners.includes('admin'))
                                         em.userBanner.userBanner--admin
@@ -92,7 +108,7 @@ block main
         .block-tabHeader.block-tabHeader--memberTabs.tabs.hScroller
             span.hScroller-scroll.is-calculated
                 a.tabs-tab.rippleButton.is-active(aria-selected='true' role='tab' id='about') Giới thiệu
-                a.tabs-tab.rippleButton Bạn bè
+                a.tabs-tab.rippleButton(aria-selected='false' role='tab' id='friend') Bạn bè
         .tabPanes.js-memberTabPanes
             li.is-active(data-href='/members/jimmynguyen.9/about' role='tabpanel' aria-labelledby='about' aria-expanded='true')
                 .block
@@ -118,7 +134,22 @@ block main
                                 ul.listHeap
                                     li
                                         a.avatar.avatar--s(href="#")
-                                            img.avatar-u23-s(src="https://images.playground.com/fc5ed3a1ea97494f9974f44457ecee0c.jpeg" alt="JimmyNguyen" width="48" height="48") 
+                                            img.avatar-u23-s(src="https://images.playground.com/fc5ed3a1ea97494f9974f44457ecee0c.jpeg" alt="JimmyNguyen" width="48" height="48")
+            li(data-href='/members/jimmynguyen.9/friends' role='tabpanel' aria-labelledby='friend' aria-expanded='false')
+                .block
+                    .block-container
+                        .block-body
+                            .block-row.block-row--separated
+                                h4.block-textHeader.mb-4 Bạn bè
+                                .row
+                                    each friend in friends
+                                        .col-md-6.mb-4
+                                            .d-flex.align-items-center(style='border-radius: 8px; padding: 16px; border: 1px solid #e9e9e9;')
+                                                a(style='margin-right: 16px; flex-shrink: 0;' href=`/user/${friend.slug}`)
+                                                    img.avatar-u23-s(src=friend.avatar alt=friend.fullName width="80" height="80" style="border-radius: 8px;")
+                                                a(href=`/user/${friend.slug}`) 
+                                                    span.text-dark.fw-bold #{friend.fullName}
+
 
                                 
                                         

@@ -7,6 +7,7 @@ const { uploadToCloudinary } = require("../../helpers/uploadToCloudinary");
 module.exports = async (req, res) => {
     const userId = res.locals.user.id;
     const fullName = res.locals.user.fullName;
+    const avatar = res.locals.user.avatar;
     const roomChatId = req.params.roomChatId;
 
     _io.once('connection', (socket) => {
@@ -100,16 +101,18 @@ module.exports = async (req, res) => {
             _io.to(roomChatId).emit("SERVER_SEND_MESSAGE", {
                 userId: userId,
                 fullName: fullName,
+                avatar: avatar,
                 content: data.content,
                 images: images,
                 typeRoom: roomChat.typeRoom
             })
         })
 
-        socket.on("CLIENT_TYPING", (data) => {
+        socket.on("CLIENT_TYPING", async (data) => {
             socket.to(roomChatId).emit("SERVER_TYPING", {
                 userId: userId,
                 fullName: fullName,
+                avatar: avatar,
                 roomChatId: roomChatId,
                 status: data.status
             });

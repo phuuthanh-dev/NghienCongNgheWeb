@@ -58,3 +58,24 @@ if (uploadImage) {
   }
 }
 // End Upload Image
+
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.tabs-tab');
+  const panes = document.querySelectorAll('.tabPanes > li');
+
+  tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+          // Remove 'is-active' class from all tabs and panes
+          tabs.forEach(t => t.classList.remove('is-active'));
+          panes.forEach(p => p.classList.remove('is-active'));
+
+          // Add 'is-active' class to clicked tab and corresponding pane
+          tab.classList.add('is-active');
+          const paneId = tab.getAttribute('id');
+          const pane = document.querySelector(`.tabPanes > li[aria-labelledby="${paneId}"]`);
+          if (pane) {
+              pane.classList.add('is-active');
+          }
+      });
+  });
+});

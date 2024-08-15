@@ -23,7 +23,7 @@ module.exports.suggestions = async (req, res) => {
     ],
     status: "active",
     deleted: false,
-  }).select("avatar fullName");
+  }).select("avatar fullName slug");
 
   res.render("client/pages/friend/suggestion", {
     pageTitle: "Danh sách gợi ý",
@@ -43,7 +43,7 @@ module.exports.requests = async (req, res) => {
     _id: { $in: requestFriends },
     status: "active",
     deleted: false,
-  }).select("avatar fullName");
+  }).select("avatar fullName slug");
 
   res.render("client/pages/friend/request", {
     pageTitle: "Lời mời đã gửi",
@@ -63,7 +63,7 @@ module.exports.accepts = async (req, res) => {
     _id: { $in: acceptFriends },
     status: "active",
     deleted: false,
-  }).select("avatar fullName");
+  }).select("avatar fullName slug");
 
   res.render("client/pages/friend/accept", {
     pageTitle: "Lời mời đã nhận",
@@ -80,7 +80,7 @@ module.exports.index = async (req, res) => {
     _id: { $in: friendsListId },
     status: "active",
     deleted: false,
-  }).select("avatar fullName statusOnline friendsList");
+  }).select("avatar fullName statusOnline friendsList slug");
 
   users.forEach((user) => {
     const info = res.locals.user.friendsList.find(userFriend => userFriend.user_id == user.id);

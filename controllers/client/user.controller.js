@@ -28,6 +28,7 @@ module.exports.registerPost = async (req, res) => {
   }
 
   req.body.password = md5(req.body.password)
+  req.body.avatar = "https://robohash.org/hicveldicta.png";
 
   const user = new User(req.body);
   await user.save();
@@ -227,19 +228,6 @@ module.exports.resetPasswordPost = async (req, res) => {
   res.redirect("/");
 };
 
-// [GET] /user/profile
-module.exports.myProfile = async (req, res) => {
-  const infoUser = await User.findOne({
-    token: req.cookies.tokenUser,
-    deleted: false
-  }).select("-password");
-
-  res.render("client/pages/user/profile", {
-    pageTitle: "Thông tin tài khoản",
-    infoUser: infoUser
-  });
-};
-
 // [GET] /user/profile/edit
 module.exports.editProfile = async (req, res) => {
   const user = await User
@@ -281,19 +269,23 @@ module.exports.editProfilePatch = async (req, res) => {
   res.redirect("back");
 }
 
-// [GET] /user/profile/:userId
+// [GET] /user/:slug
 module.exports.profile = async (req, res) => {
-  const id = req.params.userId;
+  const slug = req.params.slug;
   const infoUser = await User.findOne({
-    _id: id,
+    slug: slug,
     deleted: false
   }).select("-password");
 
   const friendsListId = infoUser.friendsList.map(friend => friend.user_id);
   infoUser.friendsListId = friendsListId;
+  const friends = await User.find({
+    _id: { $in: friendsListId } 
+  }).select('fullName avatar slug');
 
   res.render("client/pages/user/profile", {
     pageTitle: "Thông tin tài khoản",
-    infoUser: infoUser
+    infoUser: infoUser,
+    friends: friends
   });
 };

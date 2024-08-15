@@ -5,6 +5,7 @@ module.exports = async (res) => {
     const userIdA = res.locals.user.id;
 
     _io.once('connection', (socket) => {
+        
         // Gửi yêu cầu kết bạn
         socket.on("CLIENT_ADD_FRIEND", async (userIdB) => {
             // Thêm id của user A vào danh sách bạn bè của user B

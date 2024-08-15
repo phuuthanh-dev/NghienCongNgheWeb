@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
+const slug = require('mongoose-slug-updater');
 const generate = require('../helpers/generate')
+mongoose.plugin(slug);
 
 const userSchema = new mongoose.Schema(
   {
@@ -11,8 +13,8 @@ const userSchema = new mongoose.Schema(
       default: []
     },
     token: {
-        type: String,
-        default: generate.generateRandomString(20)
+      type: String,
+      default: generate.generateRandomString(20)
     },
     phone: String,
     avatar: String,
@@ -38,9 +40,14 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     deletedAt: Date,
+    slug: {
+      type: String,
+      slug: "fullName",
+      unique: true
+    }
   },
-  {
-    timestamps: true,
+{
+  timestamps: true,
   }
 );
 

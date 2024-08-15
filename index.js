@@ -11,6 +11,7 @@ const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const moment = require("moment");
+require('events').EventEmitter.defaultMaxListeners = Infinity;
 const http = require('http');
 const { Server } = require("socket.io");
 

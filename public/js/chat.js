@@ -54,7 +54,7 @@ socket.on("SERVER_SEND_MESSAGE", (data) => {
         ${data.userId == myId || data.typeRoom !== "group" ? "" : `<div class="inner-name">${data.fullName}</div>`}
         ${data.content ? `
             <div class="inner-img-content">
-                ${data.userId != myId ? `<img class="me-2" src="https://robohash.org/hicveldicta.png" style="width: 28px; height: 28px; border-radius: 50%;">` : ""}
+                ${data.userId != myId ? `<img class="me-2" src=${data.avatar} style="width: 28px; height: 28px; border-radius: 50%;">` : ""}
                 <div class="inner-content">${data.content}</div>
             </div>` : ""}
         ${data.images && data.images.length > 0 ? `
@@ -147,7 +147,7 @@ if (elementListTyping) {
             boxTyping.setAttribute("user-id", data.userId);
             boxTyping.innerHTML = `
                 <div class="inner-img-content">
-                    <img src="https://robohash.org/hicveldicta.png" style="width: 28px; height: 28px; border-radius: 50%;">
+                    <img src=${data.avatar} style="width: 28px; height: 28px; border-radius: 50%;">
                     <div class="inner-dots">
                         <span></span>
                         <span></span>

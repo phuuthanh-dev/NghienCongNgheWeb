@@ -15,13 +15,13 @@ block main
           .col-6(user-id=user.id room-chat-id=user.room_chat_id unseen-chats=user.unseenChats)
             div(class="box-user")
               div(class="inner-avatar")
-                a(href=`/user/profile/${user.id}`)
+                a(href=`/user/${user.slug}`)
                   img(
                     src=(user.avatar || 'https://robohash.org/hicveldicta.png')
                     alt=user.fullName
                   )
               div(class="inner-info")
-                a(href=`/user/profile/${user.id}`)
+                a(href=`/user/${user.slug}`)
                   div(class="inner-name text-dark") #{user.fullName}
                 div(class="inner-buttons")
                   a(
