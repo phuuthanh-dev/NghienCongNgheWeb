@@ -10,9 +10,9 @@ block main
       .col-12
         +box-head("Danh sách bạn bè")
 
-    .row(data-users-friend=user.id)
+    .row(data-users-friend=user.id my-id=user.id)
       each user in users
-          .col-6(user-id=user.id)
+          .col-6(user-id=user.id room-chat-id=user.room_chat_id unseen-chats=user.unseenChats)
             div(class="box-user")
               div(class="inner-avatar")
                 a(href=`/user/profile/${user.id}`)
@@ -32,6 +32,11 @@ block main
                   class="inner-status"
                   status=user.statusOnline
                 ) <i class="fa-solid fa-circle"></i> #{user.statusOnline == 'online' ? 'Online' : 'Offline'}
+              if user.unseenChats > 0
+                span(
+                  class="badge-users-accept"
+                  badge-users-accept=user.id
+                ) #{user.unseenChats}
               
   block scripts
     script(type='module' src='/js/friend.js')

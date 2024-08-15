@@ -11,6 +11,15 @@ module.exports.index = async (req, res) => {
         deleted: false
     });
 
+    for (const roomChat of listRoomChat) {
+        const users = roomChat.users;
+        for (const user of users) {
+            if (user.user_id == userId && user.unseenChats > 0) {
+                roomChat.unseenChats = user.unseenChats;
+            }
+        }
+    }
+
     res.render("client/pages/rooms-chat/index", {
         pageTitle: "Danh sách phòng",
         listRoomChat: listRoomChat

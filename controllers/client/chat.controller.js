@@ -7,6 +7,7 @@ const chatSocket = require("../../sockets/client/chat.socket");
 // [GET] /chat/:roomChatId
 module.exports.index = async (req, res) => {
     const roomChatId = req.params.roomChatId;
+    const userId = res.locals.user.id;
     // Socket chat
     await chatSocket(req, res);
     // End socket chat
@@ -37,6 +38,27 @@ module.exports.index = async (req, res) => {
         title = infoUser.fullName;
         statusOnline = infoUser.statusOnline
     }
+
+    if (roomChat.typeRoom === 'friend') {
+        await User.updateOne(
+            {
+                _id: userId,
+                "friendsList.room_chat_id": roomChatId
+            }, {
+            $set: { "friendsList.$.unseenChats": 0 }
+        });
+    } else {
+        await RoomChat.updateOne(
+            {
+                _id: roomChatId,
+                "users.user_id": userId
+            }, {
+            $set: { "users.$.unseenChats": 0 }
+        });
+    }
+
+    const user = await User.findOne({ _id: userId }).select("friendsList");
+    res.locals.user.friendsList = user.friendsList;
 
     res.render("client/pages/chat/index", {
         pageTitle: "Chat",

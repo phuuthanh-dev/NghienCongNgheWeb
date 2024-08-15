@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema(
     fullName: String,
     email: String,
     password: String,
+    banners: {
+      type: Array,
+      default: []
+    },
     token: {
         type: String,
         default: generate.generateRandomString(20)
@@ -19,7 +23,11 @@ const userSchema = new mongoose.Schema(
     friendsList: [
       {
         user_id: String,
-        room_chat_id: String
+        room_chat_id: String,
+        unseenChats: {
+          type: Number,
+          default: 0
+        }
       }
     ],
     acceptFriends: Array,

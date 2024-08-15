@@ -5,65 +5,124 @@ block main
   .container
     .row
       .col-12
-        .block-container
-            .memberHeader.memberHeader--withBanner
-                .memberProfileBanner.memberHeader-main.memberProfileBanner-u9-l(data-toggle-class='memberHeader--withBanner' style='background-image: url(/images/bg.jpg); background-position-y: 60%;')
-                    .memberHeader-mainContent
-                        span.memberHeader-avatar
-                            span.avatarWrapper
-                                .avatar-border-profile-4
-                                    a.avatar.avatar--l(href='#' data-user-id='9')
-                                        img.avatar-u9-l(src=(infoUser.avatar || 'https://robohash.org/hicveldicta.png') alt=infoUser.fullName width='192' height='192')
-                        .memberHeader-content.memberHeader-content--info
-                            h1.memberHeader-name 
-                                span.memberHeader-nameWrapper
-                                    span.username(dir="auto")
-                                        span.username--style4.username--moderator #{infoUser.fullName}
-                            .memberHeader-banners
-                                em.userBanner.userBanner.userBanner--green
-                                    span.userBanner-before
-                                    strong Thành viên cấp cao
-                                    span.userBanner-after
-                .memberHeader-content
-                    .memberHeader-stats
-                        .pairJustifier
-                            dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
-                                dt Bài viết
-                                dd 0
-                            dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
-                                dt Bạn bè
-                                dd #{infoUser.friendsList.length}
-                            dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
-                                dt Ảnh
-                                dd 0
-                            dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
-                                dt Danh hiệu
-                                dd 1
-                            dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
-                                dt Donated
-                                dd 0
-                            dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
-                                dt Level
-                                dd 0
-                    .memberHeader-separator
-                    .uix_memberHeader__extra
-                        .memberHeader-blurb
-                            dl.pairs.pairs--inline
-                                dt Tham gia: 
-                                dd
-                                    time(title='') #{moment(time).format("DD/MM/YY")}
-                        .memberHeader-blurb
-                            dl.pairs.pairs--inline
-                                dt Email: 
-                                dd.afEmail #{infoUser.email}
-                        .memberHeader-buttons
-                            .buttonGroup
-                                if (user.id == infoUser.id)
-                                    a(class="btn button button--link rippleButton"
-                                        btn-add-friend=user.id
-                                    ) Kết bạn
-                                    a(href="/user/profile/edit" class="btn btn-primary ms-3") Chỉnh sửa thông tin
-                                    a(href="/user/logout" class="btn btn-dark ms-3") Đăng xuất
+        .block
+            .block-container
+                .memberHeader.memberHeader--withBanner
+                    .memberProfileBanner.memberHeader-main.memberProfileBanner-u9-l(data-toggle-class='memberHeader--withBanner' style='background-image: url(/images/bg.jpg); background-position-y: 60%;')
+                        .memberHeader-mainContent
+                            span.memberHeader-avatar
+                                span.avatarWrapper
+                                    .avatar-border-profile-4
+                                        a.avatar.avatar--l(href='#' data-user-id='9')
+                                            img.avatar-u9-l(src=(infoUser.avatar || 'https://robohash.org/hicveldicta.png') alt=infoUser.fullName width='192' height='192')
+                            .memberHeader-content.memberHeader-content--info
+                                h1.memberHeader-name 
+                                    span.memberHeader-nameWrapper
+                                        span.username(dir="auto")
+                                            span.username--style4.username--moderator #{infoUser.fullName}
+                                .memberHeader-banners
+                                    if (infoUser.banners.includes('admin'))
+                                        em.userBanner.userBanner--admin
+                                            span.userBanner-before
+                                            strong Quản trị viên
+                                            span.userBanner-after
+                                    if (infoUser.banners.includes('mod'))
+                                        em.userBanner.userBanner--mod
+                                            span.userBanner-before
+                                            strong Moderator
+                                            span.userBanner-after
+                                    if (infoUser.banners.includes('senior'))
+                                        em.userBanner.userBanner.userBanner--green
+                                            span.userBanner-before
+                                            strong Thành viên cấp cao
+                                            span.userBanner-after
+                                .memberHeader-blurbContainer
+                                    .memberHeader-blurb
+                                        span Chỉ có cho đi ta mới có thể nhận lại được những gì ta có
+                    .memberHeader-content
+                        .memberHeader-stats
+                            .pairJustifier
+                                dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
+                                    dt Bài viết
+                                    dd 0
+                                dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
+                                    dt Bạn bè
+                                    dd #{infoUser.friendsList.length}
+                                dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
+                                    dt Ảnh
+                                    dd 0
+                                dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
+                                    dt Danh hiệu
+                                    dd #{infoUser.banners.length}
+                                dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
+                                    dt Donated
+                                    dd 0
+                                dl.pairs.pairs--rows.pairs--rows--centered.fauxBlockLink
+                                    dt Level
+                                    dd 0
+                        .memberHeader-separator
+                        .uix_memberHeader__extra
+                            .memberHeader-blurb
+                                dl.pairs.pairs--inline
+                                    dt Tham gia: 
+                                    dd
+                                        time(title='') #{moment(time).format("DD/MM/YYYY")}
+                            .memberHeader-buttons
+                                .buttonGroup
+                                    if (user.id != infoUser.id)
+                                        if(infoUser.friendsListId.includes(user.id))
+                                            a(class="btn button button--link rippleButton"
+                                                btn-add-friend=user.id
+                                            ) 
+                                                img.me-2(style='margin-bottom: 2px;' alt='' aria-hidden='true' height='16' width='16' src='https://static.xx.fbcdn.net/rsrc.php/v3/yF/r/5nzjDogBZbf.png')
+                                                | Bạn bè 
+                                        else 
+                                            a(class="btn button button--link rippleButton"
+                                                btn-add-friend=user.id
+                                            ) Kết bạn
+                                        a(class="btn button button--link rippleButton"
+                                            btn-add-friend=user.id
+                                        ) Theo dõi
+                                        
+                                .buttonGroup
+                                    if (user.id == infoUser.id)
+                                        a(href="/user/profile/edit" class="btn btn-primary ms-3") Chỉnh sửa thông tin
+                                        a(href="/user/logout" class="btn btn-dark ms-3") Đăng xuất
+
+        .block-tabHeader.block-tabHeader--memberTabs.tabs.hScroller
+            span.hScroller-scroll.is-calculated
+                a.tabs-tab.rippleButton.is-active(aria-selected='true' role='tab' id='about') Giới thiệu
+                a.tabs-tab.rippleButton Bạn bè
+        .tabPanes.js-memberTabPanes
+            li.is-active(data-href='/members/jimmynguyen.9/about' role='tabpanel' aria-labelledby='about' aria-expanded='true')
+                .block
+                    .block-container
+                        .block-body
+                            .block-row.block-row--separated
+                                dl.pairs.pairs--columns.pairs--fixedSmall
+                                    dt Sinh nhật:
+                                    dd 09/08/1999
+                                dl.pairs.pairs--columns.pairs--fixedSmall
+                                    dt Số điện thoại:
+                                    dd #{infoUser.phone}
+                                dl.pairs.pairs--columns.pairs--fixedSmall
+                                    dt Email:
+                                    dd #{infoUser.email}
+                            .block-row.block-row--separated
+                                h4.block-textHeader Liên hệ
+                                dl.pairs.pairs--columns.pairs--fixedSmall
+                                    dt Nhắn tin:
+                                    dd #{infoUser.phone}
+                            .block-row.block-row--separated
+                                h4.block-textHeader Người theo dõi
+                                ul.listHeap
+                                    li
+                                        a.avatar.avatar--s(href="#")
+                                            img.avatar-u23-s(src="https://images.playground.com/fc5ed3a1ea97494f9974f44457ecee0c.jpeg" alt="JimmyNguyen" width="48" height="48") 
+
+                                
+                                        
+
     
     
         

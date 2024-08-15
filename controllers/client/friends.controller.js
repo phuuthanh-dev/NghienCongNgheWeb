@@ -74,20 +74,25 @@ module.exports.accepts = async (req, res) => {
 // [GET] /friends
 module.exports.index = async (req, res) => {
   const friendsListId = res.locals.user.friendsList.map(user => user.user_id);
+  const myUnseenChats = res.locals.user.friendsList.map(user => user.unseenChats);
 
   const users = await User.find({
     _id: { $in: friendsListId },
     status: "active",
     deleted: false,
-  }).select("avatar fullName statusOnline");
+  }).select("avatar fullName statusOnline friendsList");
 
   users.forEach((user) => {
     const info = res.locals.user.friendsList.find(userFriend => userFriend.user_id == user.id);
-    user.room_chat_id = info.room_chat_id;
+
+    if (info) {
+      user.room_chat_id = info.room_chat_id;
+      user.unseenChats = info.unseenChats;
+    }
   });
 
   res.render("client/pages/friend/index", {
     pageTitle: "Danh sách bạn bè",
-    users: users
+    users: users,
   });
 };

@@ -289,6 +289,9 @@ module.exports.profile = async (req, res) => {
     deleted: false
   }).select("-password");
 
+  const friendsListId = infoUser.friendsList.map(friend => friend.user_id);
+  infoUser.friendsListId = friendsListId;
+
   res.render("client/pages/user/profile", {
     pageTitle: "Thông tin tài khoản",
     infoUser: infoUser

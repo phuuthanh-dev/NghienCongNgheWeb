@@ -9,7 +9,11 @@ const roomChatSchema = new mongoose.Schema(
         users: [
             {
                 user_id: String,
-                role: String
+                role: String,
+                unseenChats: {
+                    type: Number,
+                    default: 0
+                }
             }
         ],
         deleted: {

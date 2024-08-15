@@ -1,13 +1,28 @@
 .row
   .col-12
     a(
-      class="btn btn-primary m-1"
+      class="btn btn-primary m-1 position-relative"
       href="/friends"
-    ) Danh sách bạn bè
+      badge-unseen-chats=user.id
+    ) 
+      | Nhắn tin
+      if user.friendsList.filter(friend => friend.unseenChats > 0).length > 0
+        span(
+          class="badge-users-accept"
+          badge-users-accept=user.id
+        ) #{user.friendsList.filter(friend => friend.unseenChats > 0).length}
     a(
-      class="btn btn-primary m-1"
+      class="btn btn-primary m-1 position-relative"
       href="/rooms-chat"
+      badge-unseen-groups=user.id
     ) Phòng chat
+      if (unseenGroupChats)
+        span(
+          class="badge-users-accept"
+          badge-noti-group
+          badge-users-accept=user.id
+        )
+      
     a(
       class="btn btn-primary m-1"
       href="/friends/suggestions"

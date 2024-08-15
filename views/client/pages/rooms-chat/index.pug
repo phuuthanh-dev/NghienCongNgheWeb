@@ -17,10 +17,10 @@ block main
           class="btn btn-sm btn-success mr-1"
         ) Tạo phòng chat
 
-    .row
+    .row(my-id=user.id)
       each room in listRoomChat
-        .col-6
-          div(class="box-room")
+        .col-6(user-id=user.id room-chat-id=room.id)
+          div(class="box-room position-relative")
             div(class="inner-avatar")
               img(
                 src="https://robohash.org/hicveldicta.png"
@@ -33,3 +33,8 @@ block main
                   href=`/chat/${room.id}`
                   class="btn btn-sm btn-primary mr-1"
                 ) Nhắn tin
+            if room.unseenChats > 0
+              span(
+                  class="badge-users-accept"
+                  badge-users-accept=user.id
+              ) #{room.unseenChats}
