@@ -472,13 +472,17 @@ button.button a.button.button--link:focus {
 .block-tabHeader .tabs-tab {
     padding: 15px 15px;
     border-bottom: 2px solid transparent;
+    background-color: white;
 }
 
 .block-tabHeader .tabs-tab,
 .block-tabHeader .tabs-text,
 .block-tabHeader .tabs-extra,
 .block-tabHeader .hScroller-action {
+    background-color: #8BC34A;
+    color: white;
     font-size: 18px;
+    border: 1px solid #8BC34A;
 }
 
 .rippleButton {
@@ -498,14 +502,15 @@ button.button a.button.button--link:focus {
 
 .block-tabHeader .tabs-tab:not(.is-readonly):hover {
     color: #8BC34A;
-    background: rgba(139, 195, 74, 0.1);
+    background-color: white;
+    border: 1px solid #8BC34A;
 }
 
 .block-tabHeader .tabs-tab.is-active,
 .block-tabHeader .tabs>input:checked+.tabs-tab--radio {
-    background: none;
+    background-color: white;
     color: #8BC34A;
-    border-color: #8BC34A;
+    border: 1px solid #8BC34A;
 }
 
 /* duoi tab */
@@ -626,4 +631,14 @@ button.button a.button.button--link:focus {
 :not(.btn-check)+.btn:active {
     background: rgba(33, 150, 243, 0.2);
     border-color: #e0e0e0 !important;
+}
+
+.profile_animated_background {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    z-index: -1;
 }
