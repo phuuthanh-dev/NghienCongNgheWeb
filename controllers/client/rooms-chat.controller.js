@@ -50,7 +50,7 @@ module.exports.createPost = async (req, res) => {
 
     const dataRoomChat = {
         title: title,
-        avatar: "/public/images/avatar-room.png",
+        avatar: "/images/avatar-room.png",
         typeRoom: "group",
         users: []
     };
