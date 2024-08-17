@@ -8,6 +8,13 @@ module.exports.index = async (req, res) => {
         _id: req.cookies.cartId
     });
 
+    if (!cart) {
+        res.render("client/pages/cart/index", {
+            pageTitle: "Giỏ hàng",
+            cartDetail: null
+        });
+        return;
+    }
     cart.totalPrice = 0;
 
     for (const item of cart.products) {

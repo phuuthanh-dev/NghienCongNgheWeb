@@ -18,7 +18,7 @@ block main
         +box-head("Giỏ hàng")
 
 
-    if(cartDetail.products.length > 0)
+    if(cartDetail && cartDetail.products.length > 0)
       .row
         .col-12
           table(class="table table-bordered" table-cart)

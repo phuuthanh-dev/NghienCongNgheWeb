@@ -1,7 +1,7 @@
 const User = require("../../models/user.model");
 const RoomChat = require("../../models/room-chat.model");
 
-// [GET] /rooms-chat/
+// [GET] /rooms-chat
 module.exports.index = async (req, res) => {
     const userId = res.locals.user.id;
 
